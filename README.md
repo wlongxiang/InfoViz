@@ -13,6 +13,8 @@ Assignment for Information Visualization course at University of Amsterdam 2020.
   -> nr of people per postal code (letters not included)
 - https://www.cbs.nl/nl-nl/nieuws/2019/12/regionale-verschillen-in-huizenprijzen-groter
   -> average housing prices in 2018 per 'gemeente'
+- https://www.arcgis.com/home/item.html?id=68d84ef791594f329dc4b557645090a9#overview
+  -> dataset of public transport stops and stations
 
 # Meeting notes
 ## Week 3 @ 20/02/2020
