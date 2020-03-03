@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <script src="/assets/plugin/jquery.js"></script>
+  <link href="/assets/radio/flat/red.css" rel="stylesheet">
+  <script src="/assets/radio/icheck.js"></script>
+<head lang="zh-cn">
+  <title>threejs 3d geojson</title>
+  <meta name="renderer" content="webkit">
+  <!-- <script src="/assets/plugin/jquery.min.js"></script> -->
+  <script src="/assets/plugin/threejs/three.js"></script>
+  <script src="/assets/plugin/threejs/js/controls/OrbitControls.js"></script>
+  <script src="/assets/plugin/threejs/js/libs/stats.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-red',
+        radioClass: 'iradio_flat-red'
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="box">
+    <div id="left">
+      <ul class="list">
+        <li>
+          <input type="radio" name="iCheck" id="electricity" checked>
+          <label for="flat-radio-1">Electricity</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheck" id="gas">
+          <label for="flat-radio-2">Gas</label>
+        </li>
+      </ul>
+      <div id="slider-container"> </div>
+    </div>
+    <div id="center">
+    </div>
+    <div id="right">
+    </div>
+  </div>
+  
+</body>
+
+</html>
