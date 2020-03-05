@@ -12,10 +12,10 @@ setLeft();
 var canvas = document.getElementById("center");
 var right = document.getElementById("right");
 
-// 创建地图
+// create map
 const map = new ThreeMap();
 
-// 网络请求
+// network
 const getSummaryData = type => {
   return new Promise(function (resolve, reject) {
     $.get('/infoviz/summary/' + type, pro => {
@@ -56,4 +56,3 @@ $('input').on('ifChecked', function (event) {
 function setRight(data) {
   initChart(data);
 }
-
