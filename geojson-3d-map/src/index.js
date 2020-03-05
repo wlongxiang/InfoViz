@@ -2,7 +2,7 @@ import './index.less';
 
 import ThreeMap from './ThreeMap.js';
 import createD3RangeSlider from './d3RangeSlider.js'
-import { initChart, hoverOn }from './RightChart.js'
+import { initChart, hoverOn, update }from './RightChart.js'
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
   import('./index.html');
@@ -16,7 +16,7 @@ var right = document.getElementById("right");
 const map = new ThreeMap();
 
 // 网络请求
-const getEnergyData = type => {
+const getSummaryData = type => {
   return new Promise(function (resolve, reject) {
     $.get('/infoviz/summary/' + type, pro => {
       resolve(pro);
@@ -24,7 +24,7 @@ const getEnergyData = type => {
   })
 }
 
-getEnergyData('electricity').then(data => {
+getSummaryData('electricity').then(data => {
   setRight(data);
   $.get('/assets/map/Aruba_AL306.json', d => {
     map.setMapData(d);
@@ -45,9 +45,10 @@ function setLeft() {
 
 // action
 $('input').on('ifChecked', function (event) {
-  getEnergyData(event.target.id)
+  getSummaryData(event.target.id)
     .then(data => {
       map.loadData(data);
+      update(data);
     })
 });
 

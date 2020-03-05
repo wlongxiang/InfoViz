@@ -10,7 +10,6 @@ var highlightid = null;
 var bar = null;
 
 export function initChart(data) {
-
     mapdata = data;
     mapkeys = Object.keys(data);
     var values = mapkeys.map(function(key){
@@ -46,4 +45,8 @@ export function hoverOn(obj) {
             }
         })
     }
+}
+
+export function update(data) {
+    console.log(data)
 }
