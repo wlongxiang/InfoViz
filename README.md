@@ -32,3 +32,17 @@ Feedback:
 Action points:
 - setup basic backend with electricity data
 - start with basic front end with mapping data
+
+## Week 5 @ 05/03/2020
+prepare for demo:
+
+- have a intro page
+- self contained demo 
+
+feebdabck
+
+- boudaries for provinces in the map not clear
+- improved color
+- more information
+- more visual appealing apprearance
+- remove the axis
