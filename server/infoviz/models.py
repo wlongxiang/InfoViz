@@ -118,7 +118,22 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class Gemeente(models.Model):
+    gemeente = models.TextField(db_column='Gemeente', blank=True, null=True)  # Field name made lowercase.
+    gemiddeldeverkoopprijs = models.TextField(db_column='Gemiddeldeverkoopprijs', blank=True, null=True)  # Field name made lowercase.
+    gemeentecode = models.IntegerField(db_column='Gemeentecode', blank=True, null=True)  # Field name made lowercase.
+    gemeentenaam = models.TextField(db_column='Gemeentenaam', blank=True, null=True)  # Field name made lowercase.
+    provinciecode = models.IntegerField(db_column='Provinciecode', blank=True, null=True)  # Field name made lowercase.
+    provincienaam = models.TextField(db_column='Provincienaam', blank=True, null=True)  # Field name made lowercase.
+    id = models.AutoField(unique=True, blank=True, null=False, primary_key=True)
+
+    class Meta:
+        managed = True
+        db_table = 'gemeente'
+
+
 class Summary(models.Model):
+    id = models.AutoField(unique=True, blank=True, null=False, primary_key=True)
     province = models.TextField(blank=True, null=True)
     electricity = models.IntegerField(blank=True, null=True)
     gas = models.IntegerField(blank=True, null=True)
@@ -197,6 +212,3 @@ class Summary(models.Model):
     class Meta:
         managed = True
         db_table = 'summary'
-        
-    def __str__(self):
-        return self.province

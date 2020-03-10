@@ -12,6 +12,9 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-        # ex: /infoviz/summary/gas
-    path('summary/<str:energy_type>/', views.energy_summary, name='energy_summary')
+        # ex: /infoviz/summary/gas,
+    path('summary/<str:rtype>/', views.summary),
+
+    path('gemeenten/<str:gemeenten>/<str:rtype>', views.gemeenten_detail)
+
 ]

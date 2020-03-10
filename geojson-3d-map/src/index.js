@@ -1,8 +1,11 @@
 import './index.less';
 
 import ThreeMap from './ThreeMap.js';
+import { GMap } from './ThreeMap.js';
+
 import createD3RangeSlider from './d3RangeSlider.js'
 import { initChart, hoverOn, update }from './RightChart.js'
+// import { CineonToneMapping } from './assets/plugin/threejs/three';
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
   import('./index.html');
@@ -24,20 +27,40 @@ const getSummaryData = type => {
   })
 }
 
+const getDetailData = (gemeenten, type) => {
+  return new Promise(function (resolve, reject) {
+    $.get('/infoviz/gemeenten/' + gemeenten +'/'+ type, pro => {
+      resolve(pro);
+    })
+  })
+}
+
 getSummaryData('electricity').then(data => {
   setRight(data);
-  $.get('/assets/map/Aruba_AL306.json', d => {
+  $.get('/assets/map/Netherlands.json', d => {
     map.setMapData(d);
     map.on('click', (e, g) => {
-      console.log(g);
+      needZoomIn(g.data.properties.locname);
     });
     map.on('mouseover', (e, g) => {
       hoverOn(g.data.properties.locname);
     });
     map.loadData(data);
-    canvas.appendChild(map.renderer.domElement);
+    canvas.appendChild(map.renderer().domElement);
   })}
 )
+
+function needZoomIn(gemeenten) {
+  getDetailData(gemeenten, 'gemiddeldeverkoopprijs').then(data => {
+    // setRight(data)
+    $.get('/assets/map/' + gemeenten + '.json', d => {
+      const gmap = new GMap()
+      gmap.setMapData(d)
+      gmap.loadData(data)
+      map.addnewmap(gmap, gemeenten)
+    })
+  })
+}
 /// left section
 function setLeft() {
   var slider = createD3RangeSlider(0, 100, "#slider-container");
