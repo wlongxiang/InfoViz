@@ -1,0 +1,108 @@
+<!-- Trend of Electricity Consumption and Gas C0nsumption-->
+
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var colors = ['#5793f3', '#d14a61', '#675bba'];
+
+
+option = {
+    color: colors,
+
+    tooltip: {
+        trigger: 'none',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    legend: {
+        data:['Electricity Consumption', 'Gas C0nsumption']
+    },
+    grid: {
+        top: 70,
+        bottom: 50
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[1]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return 'Gas Consumption  ' + params.value
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+            data: ['2010', '2011','2012','2013','2014','2015','2016','2017','2018','2019']
+        },
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[0]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return 'Electricity Consumption  ' + params.value
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+            data: ['2010', '2011','2012','2013','2014','2015','2016','2017','2018','2019']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: 'Electricity Consumption',
+            type: 'line',
+            xAxisIndex: 1,
+            smooth: true,
+            data: [0.1424885597994803,0.2409777634695426,0.4481776162991239,0.49001770644100534,0.3057557430956378,-0.22748407570078413,-0.49426495274449833,-0.5099822935589946,0.04827649642421873,-0.4439625635247315]
+        },
+        {
+            name: 'Gas C0nsumption',
+            type: 'line',
+            smooth: true,
+            data: [-0.03336992033921098,0.07188397370482,0.24234580060279565,0.14838245880500905,-0.027169906099943835,-0.3903364817935148,-0.6148205061268402,-0.02382961134711378,0.38517949387315975,0.24173469872083916]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

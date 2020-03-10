@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+
+setTimeout(function () {
+
+    option = {
+        legend: {},
+        tooltip: {
+            trigger: 'axis',
+            showContent: false
+        },
+        dataset: {
+            source: [
+                ['Province', '2010', '2011','2012','2013','2014','2015','2016','2017','2018','2019'],
+                ['Drenthe', 5200.9, 5305.931,5245.897,5287.213,5103.473,4973.067,4779.847,4818.419,5291.41599,5202.83328],
+                ['Flevoland', 6079.43,6077.669,5910.152,5785.38,5709.143,5498.667,5419.346,5462.249,5546.232,5481.06],
+                ['Friesland', 11030.016,11161.354,11024.113,11052.415,10755.373,10412.167,10165.887,10101.538,9990.428,9992.728],
+                ['Gelderland', 30718.48,30398.943,29911.767,28857.561,28663.621,27359.361,27269.337,27096.824,27522.978,27118.594],
+                ['Groningen', 7272.815,7441.253,7404.471,7552.584,7380.296,7188.979,6910.605,6924.815,7438.97298999999,7378.37787999999],
+                ['Limburg', 19942.951,19794.476,18979.681,19363.829,18932.223,18137.2,17496.218,17413.012,18623.95474,18304.50054],
+                ['Noord Brabant', 24821.538, 24812.162,26032.887,25674.626,25152.13,24314.322,23477.572,23078.381,24969.5039,24818.15794],
+                ['Noord Holland', 55329.059, 55039.541,54229.577,53096.87,52633.632,50870.009,49841.606,49311.334,49294.177,48954.061],
+                ['Overijssel', 16079.121,16265.549,16207.978,16848.995,16346.196,15758.422,15276.874,15205.867,16637.97514,16415.78225],
+                ['Utrecht',21541.759,21609.878,21663.985,21474.024,21117.907,20477.727,20197.336,19947.392,20038.079,19163.286],
+                ['Zeeland',0],
+                ['South Holland',66380.741,66402.362,66360.876,65488.561,65090.159,63110.612,61755.389,60935.026,61030.843,59529.856]
+            ]
+        },
+        xAxis: {type: 'category'},
+        yAxis: {gridIndex: 0},
+        grid: {top: '55%'},
+        series: [
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+            {
+                type: 'pie',
+                id: 'pie',
+                radius: '30%',
+                center: ['50%', '25%'],
+                label: {
+                    formatter: '{b}: {@2010} ({d}%)'
+                },
+                encode: {
+                    itemName: 'Province',
+                    value: '2010',
+                    tooltip: '2010'
+                }
+            }
+        ]
+    };
+
+    myChart.on('updateAxisPointer', function (event) {
+        var xAxisInfo = event.axesInfo[0];
+        if (xAxisInfo) {
+            var dimension = xAxisInfo.value + 1;
+            myChart.setOption({
+                series: {
+                    id: 'pie',
+                    label: {
+                        formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                    },
+                    encode: {
+                        value: dimension,
+                        tooltip: dimension
+                    }
+                }
+            });
+        }
+    });
+
+    myChart.setOption(option);
+
+});;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
