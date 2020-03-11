@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    title: {
+            text: "Comparison",
+            left: "center"
+        },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        },
+   //     formatter: function(params){return Math.max(params.value,-params.value)}
+        
+        formatter: function (params) {
+                    return params[0].name +
+                        "<br>Total: " + params[0].value + 
+                        "<br>Province:" +  -params[1].value;
+                }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    yAxis : [
+        {
+            type : 'category',
+            axisTick : {show: false},
+            data : ['Polulation','Gas','Electricity','Hoursing Price','Transportation']
+        }
+    ],
+    series : [
+
+        {
+            name:'Province',
+            type:'bar',
+            label: {
+                normal: {
+                    show: true
+                }
+            },
+            data:[1703778, 5615641.12,1553846.1, 350000, 350297]
+        },
+        {
+            name:'Total',
+            type:'bar',
+            label: {
+                normal: {
+                    show: true,
+                    formatter: function(params){return -params.value}
+                }
+            },
+            data:[-498130, -178731.16,-517703.35, -230000, -125035]
+        }
+    ]
+};
+
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
