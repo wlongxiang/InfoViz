@@ -14,10 +14,20 @@ center['Limburg'] = {x: -1.1119238138198857, y: 1.6482849717140196, z: 0}
 import * as d3 from 'd3-geo';
 import * as TWEEN from 'tween'
 import * as THREE from 'three'
-// import { Lut } from '/Lut.js'
-// import { Color } from '/assets/plugin/threejs/three.module.js';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { Lut } from "three/examples/jsm/math/Lut";
+import { Lut } from "./Lut.js";
+
+var lut = new Lut( 'rainbow', 512 );
+var uiScene = new THREE.Scene();
+var sprite = new THREE.Sprite( new THREE.SpriteMaterial( {
+  rotation: -Math.PI / 2,
+  map: new THREE.CanvasTexture( lut.createCanvas() )
+} ) );
+// sprite.position = new THREE.Vector2(1, 1);
+sprite.scale.x = 0.0625;
+sprite.position.x = 0.5;
+sprite.position.y = -0.9;
+uiScene.add( sprite );
 
 // const THREE = window.THREE;
 const width = window.innerWidth * 0.45;
@@ -32,7 +42,11 @@ const btNetherlands = document.getElementById('toNetherlands');
    */
 function animate() {
   requestAnimationFrame(animate);
+  renderer.clear();
   renderer.render(scene, camera);
+  const orthoCamera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 1, 2 );
+  orthoCamera.position.set( 0.5, 0, 1 );
+  renderer.render( uiScene, orthoCamera );
   TWEEN.update();
 
 }
@@ -69,6 +83,7 @@ function setLight() {
  * @desc 设置渲染器
  */
 function setRender() {
+  renderer.autoClear = false;
   renderer.setSize(width, height);
 }
 
@@ -94,7 +109,6 @@ function init() {
 }
 
 init();
-
 
 // Init scene
 export default class ThreeMap {
@@ -146,16 +160,17 @@ export default class ThreeMap {
   
       if (intersects.length > 0) {
         if (this.selectObj != intersects[0].object.parent) {
-          // console.log(this.selectObj)
           this.hoverEndFunction(event)
           this.selectObj = intersects[0].object.parent
-          this.setAreaColor(this.selectObj);
+          this.setAreaAlpha(this.selectObj);
           this.hoverFunction(event, this.selectObj);
         }
-      }else {
-        this.clearAreaColor()
-        this.hoverEndFunction(event)
+      }else if (this.selectObj != null){
+        // console.log(this.selectObj);
         this.selectObj = null;
+        this.clearAreaAlpha()
+        this.hoverEndFunction(event)
+        console.log(this.selectObj);
       }
     }
   }
@@ -182,23 +197,24 @@ export default class ThreeMap {
   /**
    * @desc set region color
    */
-  setAreaColor(g, color = '#ff0') {
+  setAreaAlpha(g, color = '#ff0') {
     // set to default
     g.parent.children.forEach(gs => {
       gs.children.forEach(mesh => {
-        mesh.material.color.set(this.color);
+        mesh.material.opacity = 0.6
       });
     });
 
     // set color
+    console.log('I am here')
     g.children.forEach(mesh => {
-      mesh.material.color.set(color);
+      mesh.material.opacity = 0.4
     });
   }
 
-  clearAreaColor() {
-    this.meshes.forEach(gs => {
-      gs.material.color.set(this.color);
+  clearAreaAlpha() {
+    this.meshes.forEach(mesh => {
+      mesh.material.opacity = 0.6
     });
   }
 
@@ -386,8 +402,9 @@ export default class ThreeMap {
       line.position.z = value;
     })
   }
+
   loadColorData(data) {
-    var lut = new Lut( 'rainbow', 512 );
+    this.colorData = data
     this.depth = data;
     const values = Object.keys(data).map(function (key) {
       return data[key];
@@ -464,7 +481,7 @@ export class GMap {
     const intersects = this.raycaster.intersectObjects(this.meshes);
 
     if (intersects.length > 0) {
-      this.setAreaColor(intersects[0].object.parent);
+      this.setAreaAlpha(intersects[0].object.parent);
     }
   }
 
@@ -488,7 +505,7 @@ export class GMap {
   /**
    * @desc set region color
    */
-  setAreaColor(g, color = '#ff0') {
+  setAreaAlpha(g, color = '#ff0') {
     // set to default
     g.parent.children.forEach(gs => {
       gs.children.forEach(mesh => {

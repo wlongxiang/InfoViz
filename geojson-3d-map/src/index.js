@@ -48,6 +48,7 @@ getSummaryData('electricity').then(data => {
        rightHoverEnd()
     });
     map.loadData(data);
+    map.loadColorData(data);
     canvas.appendChild(map.renderer().domElement);
   })}
 )
@@ -57,8 +58,8 @@ function needZoomIn(gemeenten) {
     // setRight(data)
     $.get('/assets/map/' + gemeenten + '.json', d => {
       const gmap = new GMap()
-      gmap.setMapData(d)
-      gmap.loadData(data)
+      gmap.setMapData(d);
+      gmap.loadData(data);
       map.addnewmap(gmap, gemeenten)
     })
   })
