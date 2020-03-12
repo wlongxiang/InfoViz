@@ -7,10 +7,6 @@
 <head lang="zh-cn">
   <title>threejs 3d geojson</title>
   <meta name="renderer" content="webkit">
-  <!-- <script src="/assets/plugin/jquery.min.js"></script> -->
-  <script src="/assets/plugin/threejs/three.js"></script>
-  <script src="/assets/plugin/threejs/js/controls/OrbitControls.js"></script>
-  <script src="/assets/plugin/threejs/js/libs/stats.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
@@ -88,7 +84,12 @@
       <button id="toNetherlands" class="ui" hidden=true></button>
     </div>
     <div id="right">
-      <div id="top_container" style="height: 300px"></div>
+      <div id="sc_container" style="height: 33%"></div>
+      <div id="pop_container" style="height: 33%"></div>
+      <div id = "pie_container" style="height: 33%">
+        <div id="pie_left_container" style="width: 50%; height: 100%; float: left;"></div>
+        <div id="pie_right_container" style="width: 50%; height: 100%; float: right;"></div>
+      </div>
     </div>
   </div>
   
