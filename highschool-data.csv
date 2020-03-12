@@ -1,0 +1,226 @@
+PROVINCIE,GEMEENTENAAM,Aantal
+Drenthe,ASSEN,3
+Drenthe,COEVORDEN,1
+Drenthe,EMMEN,4
+Drenthe,HOOGEVEEN,3
+Drenthe,MEPPEL,3
+Flevoland,ALMERE,8
+Flevoland,LELYSTAD,4
+Flevoland,NOORDOOSTPOLDER,4
+Flevoland,URK,1
+Friesland,ACHTKARSPELEN,1
+Friesland,AMELAND,1
+Friesland,DANTUMADIEL,1
+Friesland,HARLINGEN,1
+Friesland,HEERENVEEN,4
+Friesland,LEEUWARDEN,4
+Friesland,NOARDEAST-FRYSLAN,2
+Friesland,OOSTSTELLINGWERF,1
+Friesland,OPSTERLAND,1
+Friesland,SCHIERMONNIKOOG,1
+Friesland,SMALLINGERLAND,2
+Friesland,SUDWEST-FRYSLAN,4
+Friesland,TERSCHELLING,1
+Friesland,TYTSJERKSTERADIEL,1
+Friesland,VLIELAND,1
+Friesland,WAADHOEKE,2
+Friesland,WESTSTELLINGWERF,1
+Gelderland,AALTEN,1
+Gelderland,APELDOORN,7
+Gelderland,ARNHEM,8
+Gelderland,BARNEVELD,3
+Gelderland,BERG EN DAL,1
+Gelderland,BERKELLAND,1
+Gelderland,CULEMBORG,2
+Gelderland,DOETINCHEM,4
+Gelderland,DRUTEN,1
+Gelderland,DUIVEN,1
+Gelderland,EDE,6
+Gelderland,ELBURG,1
+Gelderland,EPE,1
+Gelderland,ERMELO,1
+Gelderland,HARDERWIJK,4
+Gelderland,HEERDE,1
+Gelderland,LINGEWAARD,1
+Gelderland,LOCHEM,2
+Gelderland,MONTFERLAND,1
+Gelderland,NIJKERK,2
+Gelderland,NIJMEGEN,11
+Gelderland,OOST GELRE,1
+Gelderland,OUDE IJSSELSTREEK,1
+Gelderland,OVERBETUWE,1
+Gelderland,RENKUM,1
+Gelderland,RHEDEN,1
+Gelderland,ROZENDAAL,1
+Gelderland,TIEL,1
+Gelderland,WAGENINGEN,1
+Gelderland,WEST BETUWE,1
+Gelderland,WIJCHEN,2
+Gelderland,WINTERSWIJK,2
+Gelderland,ZALTBOMMEL,2
+Gelderland,ZEVENAAR,1
+Gelderland,ZUTPHEN,4
+Groningen,APPINGEDAM,1
+Groningen,DELFZIJL,1
+Groningen,GRONINGEN,11
+Groningen,HET HOGELAND,1
+Groningen,MIDDEN-GRONINGEN,1
+Groningen,OLDAMBT,2
+Groningen,STADSKANAAL,2
+Groningen,VEENDAM,1
+Groningen,WESTERKWARTIER,1
+Groningen,WESTERWOLDE,1
+Limburg,BRUNSSUM,1
+Limburg,ECHT-SUSTEREN,1
+Limburg,GULPEN-WITTEM,1
+Limburg,HEERLEN,10
+Limburg,HORST AAN DE MAAS,1
+Limburg,LANDGRAAF,1
+Limburg,LEUDAL,1
+Limburg,MAASTRICHT,4
+Limburg,MEERSSEN,1
+Limburg,PEEL EN MAAS,1
+Limburg,ROERMOND,4
+Limburg,SITTARD-GELEEN,6
+Limburg,STEIN,1
+Limburg,VENLO,4
+Limburg,VENRAY,1
+Limburg,WEERT,2
+Noord-Brabant,ALTENA,1
+Noord-Brabant,ASTEN,1
+Noord-Brabant,BERGEN OP ZOOM,6
+Noord-Brabant,BERNHEZE,1
+Noord-Brabant,BEST,1
+Noord-Brabant,BLADEL,1
+Noord-Brabant,BOXMEER,2
+Noord-Brabant,BOXTEL,3
+Noord-Brabant,BREDA,8
+Noord-Brabant,CUIJK,1
+Noord-Brabant,DEURNE,2
+Noord-Brabant,DONGEN,1
+Noord-Brabant,EERSEL,1
+Noord-Brabant,EINDHOVEN,9
+Noord-Brabant,ETTEN-LEUR,3
+Noord-Brabant,GEERTRUIDENBERG,1
+Noord-Brabant,GELDROP-MIERLO,1
+Noord-Brabant,GEMERT-BAKEL,1
+Noord-Brabant,GOIRLE,1
+Noord-Brabant,HALDERBERGE,1
+Noord-Brabant,HELMOND,3
+Noord-Brabant,MEIERIJSTAD,2
+Noord-Brabant,MOERDIJK,1
+Noord-Brabant,OISTERWIJK,1
+Noord-Brabant,OOSTERHOUT,3
+Noord-Brabant,OSS,2
+Noord-Brabant,ROOSENDAAL,2
+Noord-Brabant,S HERTOGENBOSCH,10
+Noord-Brabant,SINT ANTHONIS,1
+Noord-Brabant,SINT-MICHIELSGESTEL,1
+Noord-Brabant,TILBURG,9
+Noord-Brabant,UDEN,1
+Noord-Brabant,VALKENSWAARD,1
+Noord-Brabant,VELDHOVEN,1
+Noord-Brabant,VUGHT,1
+Noord-Brabant,WAALWIJK,4
+Noord-Holland,ALKMAAR,7
+Noord-Holland,AMSTELVEEN,4
+Noord-Holland,AMSTERDAM,35
+Noord-Holland,BERGEN NH,1
+Noord-Holland,BEVERWIJK,1
+Noord-Holland,BLOEMENDAAL,3
+Noord-Holland,CASTRICUM,2
+Noord-Holland,DEN HELDER,2
+Noord-Holland,EDAM-VOLENDAM,1
+Noord-Holland,ENKHUIZEN,1
+Noord-Holland,GOOISE MEREN,4
+Noord-Holland,HAARLEM,10
+Noord-Holland,HAARLEMMERMEER,5
+Noord-Holland,HEEMSKERK,1
+Noord-Holland,HEEMSTEDE,2
+Noord-Holland,HEERHUGOWAARD,3
+Noord-Holland,HILVERSUM,4
+Noord-Holland,HOLLANDS KROON,1
+Noord-Holland,HOORN,4
+Noord-Holland,HUIZEN,1
+Noord-Holland,PURMEREND,1
+Noord-Holland,SCHAGEN,2
+Noord-Holland,STEDE BROEC,2
+Noord-Holland,TEXEL,1
+Noord-Holland,UITHOORN,3
+Noord-Holland,VELSEN,4
+Noord-Holland,WEESP,1
+Noord-Holland,ZAANSTAD,7
+Overijssel,ALMELO,5
+Overijssel,DEVENTER,2
+Overijssel,ENSCHEDE,3
+Overijssel,HAAKSBERGEN,1
+Overijssel,HARDENBERG,2
+Overijssel,HELLENDOORN,1
+Overijssel,HENGELO,4
+Overijssel,KAMPEN,4
+Overijssel,OLDENZAAL,1
+Overijssel,OMMEN,1
+Overijssel,RAALTE,1
+Overijssel,RIJSSEN-HOLTEN,1
+Overijssel,STEENWIJKERLAND,3
+Overijssel,WIERDEN,1
+Overijssel,ZWOLLE,8
+Utrecht,AMERSFOORT,9
+Utrecht,BAARN,2
+Utrecht,DE BILT,2
+Utrecht,DE RONDE VENEN,1
+Utrecht,HOUTEN,3
+Utrecht,IJSSELSTEIN,1
+Utrecht,NIEUWEGEIN,3
+Utrecht,SOEST,1
+Utrecht,STICHTSE VECHT,4
+Utrecht,UTRECHT,14
+Utrecht,UTRECHTSE HEUVELRUG,1
+Utrecht,VEENENDAAL,4
+Utrecht,VIJFHEERENLANDEN,1
+Utrecht,WOERDEN,3
+Utrecht,ZEIST,5
+Zeeland,GOES,4
+Zeeland,HULST,2
+Zeeland,KAPELLE,1
+Zeeland,MIDDELBURG,3
+Zeeland,SLUIS,1
+Zeeland,TERNEUZEN,2
+Zeeland,VLISSINGEN,1
+Zuid-Holland,ALPHEN AAN DEN RIJN,4
+Zuid-Holland,BARENDRECHT,1
+Zuid-Holland,BRIELLE,2
+Zuid-Holland,CAPELLE AAN DEN IJSSEL,3
+Zuid-Holland,DELFT,4
+Zuid-Holland,DORDRECHT,4
+Zuid-Holland,GOEREE-OVERFLAKKEE,3
+Zuid-Holland,GORINCHEM,5
+Zuid-Holland,GOUDA,7
+Zuid-Holland,HELLEVOETSLUIS,2
+Zuid-Holland,HOEKSCHE WAARD,2
+Zuid-Holland,KATWIJK,2
+Zuid-Holland,KRIMPEN AAN DEN IJSSEL,1
+Zuid-Holland,KRIMPENERWAARD,2
+Zuid-Holland,LANSINGERLAND,1
+Zuid-Holland,LEIDEN,8
+Zuid-Holland,LEIDSCHENDAM-VOORBURG,4
+Zuid-Holland,LISSE,1
+Zuid-Holland,MAASSLUIS,1
+Zuid-Holland,NISSEWAARD,4
+Zuid-Holland,NOORDWIJK,1
+Zuid-Holland,OEGSTGEEST,1
+Zuid-Holland,PAPENDRECHT,2
+Zuid-Holland,PIJNACKER-NOOTDORP,1
+Zuid-Holland,RIDDERKERK,2
+Zuid-Holland,RIJSWIJK,1
+Zuid-Holland,ROTTERDAM,29
+Zuid-Holland,S GRAVENHAGE,19
+Zuid-Holland,SCHIEDAM,5
+Zuid-Holland,SLIEDRECHT,2
+Zuid-Holland,TEYLINGEN,2
+Zuid-Holland,VLAARDINGEN,4
+Zuid-Holland,WADDINXVEEN,1
+Zuid-Holland,WASSENAAR,2
+Zuid-Holland,WESTLAND,1
+Zuid-Holland,ZOETERMEER,5
+Zuid-Holland,ZWIJNDRECHT,1
