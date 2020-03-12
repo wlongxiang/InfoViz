@@ -11,10 +11,16 @@
   <script src="/assets/plugin/threejs/three.js"></script>
   <script src="/assets/plugin/threejs/js/controls/OrbitControls.js"></script>
   <script src="/assets/plugin/threejs/js/libs/stats.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
   <script>
     $(document).ready(function(){
       $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-red',
         radioClass: 'iradio_flat-red'
       });
     });
@@ -45,13 +51,44 @@
           <input type="radio" name="iCheck" id="totaalvrouwen">
           <label for="flat-radio-5">Population Female</label>
         </li>
+        <li>
+          <input type="radio" name="iCheck" id="totaalvrouwen">
+          <label for="flat-radio-5">Population 5-10</label>
+        </li>
       </ul>
-      <div id="slider-container"> </div>
+      <ul class="list_color">
+        <li>
+          <input type="radio" name="iCheckColor" id="electricity" checked>
+          <label for="flat-radio-1">Electricity</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheckColor" id="gas">
+          <label for="flat-radio-2">Gas</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheckColor" id="totaalmannenenvrouwen">
+          <label for="flat-radio-3">Population</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheckColor" id="totaalmannen">
+          <label for="flat-radio-4">Population Male</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheckColor" id="totaalvrouwen">
+          <label for="flat-radio-5">Population Female</label>
+        </li>
+        <li>
+          <input type="radio" name="iCheckColor" id="totaalvrouwen">
+          <label for="flat-radio-5">Population 5-10</label>
+        </li>
+      </ul>
+      <!-- <div id="slider-container"> </div> -->
     </div>
     <div id="center">
       <button id="toNetherlands" class="ui" hidden=true></button>
     </div>
     <div id="right">
+      <div id="top_container" style="height: 300px"></div>
     </div>
   </div>
   

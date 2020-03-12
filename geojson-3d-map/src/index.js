@@ -3,8 +3,7 @@ import './index.less';
 import ThreeMap from './ThreeMap.js';
 import { GMap } from './ThreeMap.js';
 
-import createD3RangeSlider from './d3RangeSlider.js'
-import { initChart, hoverOn, update }from './RightChart.js'
+import { initChart, rightHoverOn, updateRight, rightHoverEnd }from './RightChart.js'
 // import { CineonToneMapping } from './assets/plugin/threejs/three';
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
@@ -43,7 +42,10 @@ getSummaryData('electricity').then(data => {
       needZoomIn(g.data.properties.locname);
     });
     map.on('mouseover', (e, g) => {
-      hoverOn(g.data.properties.locname);
+        rightHoverOn(g.data.properties.locname);
+    });
+    map.hoverEnd(() => {
+       rightHoverEnd()
     });
     map.loadData(data);
     canvas.appendChild(map.renderer().domElement);
@@ -63,19 +65,28 @@ function needZoomIn(gemeenten) {
 }
 /// left section
 function setLeft() {
-  var slider = createD3RangeSlider(0, 100, "#slider-container");
+  // var slider = createD3RangeSlider(0, 100, "#slider-container");
 }
 
 // action
 $('input').on('ifChecked', function (event) {
-  getSummaryData(event.target.id)
+  if (event.target.name == 'iCheck') {
+    getSummaryData(event.target.id)
     .then(data => {
       map.loadData(data);
-      update(data);
+      updateRight(data);
     })
+  }else if (event.target.name == 'iCheckColor') {
+    getSummaryData(event.target.id)
+    .then(data => {
+      map.loadColorData(data);
+      updateRight(data);
+    })
+  }
 });
 
 /// right section
 function setRight(data) {
   initChart(data);
 }
+

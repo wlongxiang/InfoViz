@@ -13,8 +13,11 @@ center['Limburg'] = {x: -1.1119238138198857, y: 1.6482849717140196, z: 0}
 
 import * as d3 from 'd3-geo';
 import * as TWEEN from 'tween'
+// import { Lut } from '/Lut.js'
+// import { Color } from '/assets/plugin/threejs/three.module.js';
+
 const THREE = window.THREE;
-const width = window.innerWidth * 0.5;
+const width = window.innerWidth * 0.45;
 const height = window.innerHeight;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(10, width / height, 1, 1000);
@@ -28,6 +31,7 @@ function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   TWEEN.update();
+
 }
 
 /**
@@ -132,14 +136,23 @@ export default class ThreeMap {
         this.mouse = new THREE.Vector2();
       }
       // update the mouse variable
-      this.mouse.x = ((event.clientX - window.innerWidth * 0.15) / width) * 2 - 1;
+      this.mouse.x = ((event.clientX - window.innerWidth * 0.05) / width) * 2 - 1;
       this.mouse.y = -(event.clientY / height) * 2 + 1;
       this.raycaster.setFromCamera(this.mouse, camera);
       const intersects = this.raycaster.intersectObjects(this.meshes);
   
       if (intersects.length > 0) {
-        this.setAreaColor(intersects[0].object.parent);
-        this.hoverFunction(event, intersects[0].object.parent);
+        if (this.selectObj != intersects[0].object.parent) {
+          // console.log(this.selectObj)
+          this.hoverEndFunction(event)
+          this.selectObj = intersects[0].object.parent
+          this.setAreaColor(this.selectObj);
+          this.hoverFunction(event, this.selectObj);
+        }
+      }else {
+        this.clearAreaColor()
+        this.hoverEndFunction(event)
+        this.selectObj = null;
       }
     }
   }
@@ -158,7 +171,6 @@ export default class ThreeMap {
           this.clickFunction(event, intersects[0].object.parent);
           console.log(intersects[0].object.name)
           console.log(getCenterPoint(intersects[0].object))
-
         }
       }
     }
@@ -181,6 +193,12 @@ export default class ThreeMap {
     });
   }
 
+  clearAreaColor() {
+    this.meshes.forEach(gs => {
+      gs.material.color.set(this.color);
+    });
+  }
+
   /**
    * @desc bind event
    */
@@ -190,6 +208,10 @@ export default class ThreeMap {
     } else if (eventName == 'mouseover') {
       this.hoverFunction = func;
     }
+  }
+
+  hoverEnd(func) {
+    this.hoverEndFunction = func;
   }
   /**
    * @desc creating map
@@ -361,6 +383,23 @@ export default class ThreeMap {
       line.position.z = value;
     })
   }
+  loadColorData(data) {
+    new Color(1,2,3)
+    // var lut = new Lut( 'rainbow', 512 );
+    // var color = lut.getColor( 0.5 );
+    console.log(color);
+    this.depth = data;
+    const values = Object.keys(data).map(function (key) {
+      return data[key];
+    });
+    const k = 1 / (Math.max(...values) - Math.min(...values))
+    const min_value = Math.min(...values)
+    this.meshes.forEach(mesh => {
+      const name = mesh.name
+      const value = k * (data[name] - min_value) + 0.5
+      mesh.material.color.set(color);
+    })
+  }
 
   addnewmap(gmap, name) {
     this.gmap = gmap;
@@ -418,7 +457,7 @@ export class GMap {
       this.mouse = new THREE.Vector2();
     }
     // update the mouse variable
-    this.mouse.x = ((event.clientX - window.innerWidth * 0.15) / width) * 2 - 1;
+    this.mouse.x = ((event.clientX - window.innerWidth * 0.05) / width) * 2 - 1;
     this.mouse.y = -(event.clientY / height) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, camera);
     const intersects = this.raycaster.intersectObjects(this.meshes);
@@ -687,3 +726,187 @@ function getCenterPoint(mesh) {
   mesh.localToWorld(middle);
   return middle;
 }
+
+
+
+// var Lut = function ( colormap, numberofcolors ) {
+
+// 	this.lut = [];
+// 	this.setColorMap( colormap, numberofcolors );
+// 	return this;
+
+// };
+
+// Lut.prototype = {
+
+// 	constructor: Lut,
+
+// 	lut: [], map: [], n: 256, minV: 0, maxV: 1,
+
+// 	set: function ( value ) {
+
+// 		if ( value instanceof Lut ) {
+
+// 			this.copy( value );
+
+// 		}
+
+// 		return this;
+
+// 	},
+
+// 	setMin: function ( min ) {
+
+// 		this.minV = min;
+
+// 		return this;
+
+// 	},
+
+// 	setMax: function ( max ) {
+
+// 		this.maxV = max;
+
+// 		return this;
+
+// 	},
+
+// 	setColorMap: function ( colormap, numberofcolors ) {
+
+// 		this.map = ColorMapKeywords[ colormap ] || ColorMapKeywords.rainbow;
+// 		this.n = numberofcolors || 32;
+
+// 		var step = 1.0 / this.n;
+
+// 		this.lut.length = 0;
+// 		for ( var i = 0; i <= 1; i += step ) {
+
+// 			for ( var j = 0; j < this.map.length - 1; j ++ ) {
+
+// 				if ( i >= this.map[ j ][ 0 ] && i < this.map[ j + 1 ][ 0 ] ) {
+
+// 					var min = this.map[ j ][ 0 ];
+// 					var max = this.map[ j + 1 ][ 0 ];
+
+// 					var minColor = new Color( this.map[ j ][ 1 ] );
+// 					var maxColor = new Color( this.map[ j + 1 ][ 1 ] );
+
+// 					var color = minColor.lerp( maxColor, ( i - min ) / ( max - min ) );
+
+// 					this.lut.push( color );
+
+// 				}
+
+// 			}
+
+// 		}
+
+// 		return this;
+
+// 	},
+
+// 	copy: function ( lut ) {
+
+// 		this.lut = lut.lut;
+// 		this.map = lut.map;
+// 		this.n = lut.n;
+// 		this.minV = lut.minV;
+// 		this.maxV = lut.maxV;
+
+// 		return this;
+
+// 	},
+
+// 	getColor: function ( alpha ) {
+
+// 		if ( alpha <= this.minV ) {
+
+// 			alpha = this.minV;
+
+// 		} else if ( alpha >= this.maxV ) {
+
+// 			alpha = this.maxV;
+
+// 		}
+
+// 		alpha = ( alpha - this.minV ) / ( this.maxV - this.minV );
+
+// 		var colorPosition = Math.round( alpha * this.n );
+// 		colorPosition == this.n ? colorPosition -= 1 : colorPosition;
+
+// 		return this.lut[ colorPosition ];
+
+// 	},
+
+// 	addColorMap: function ( colormapName, arrayOfColors ) {
+
+// 		ColorMapKeywords[ colormapName ] = arrayOfColors;
+
+// 	},
+
+// 	createCanvas: function () {
+
+// 		var canvas = document.createElement( 'canvas' );
+// 		canvas.width = 1;
+// 		canvas.height = this.n;
+
+// 		this.updateCanvas( canvas );
+
+// 		return canvas;
+
+// 	},
+
+// 	updateCanvas: function ( canvas ) {
+
+// 		var ctx = canvas.getContext( '2d', { alpha: false } );
+
+// 		var imageData = ctx.getImageData( 0, 0, 1, this.n );
+
+// 		var data = imageData.data;
+
+// 		var k = 0;
+
+// 		var step = 1.0 / this.n;
+
+// 		for ( var i = 1; i >= 0; i -= step ) {
+
+// 			for ( var j = this.map.length - 1; j >= 0; j -- ) {
+
+// 				if ( i < this.map[ j ][ 0 ] && i >= this.map[ j - 1 ][ 0 ] ) {
+
+// 					var min = this.map[ j - 1 ][ 0 ];
+// 					var max = this.map[ j ][ 0 ];
+
+// 					var minColor = new Color( this.map[ j - 1 ][ 1 ] );
+// 					var maxColor = new Color( this.map[ j ][ 1 ] );
+
+// 					var color = minColor.lerp( maxColor, ( i - min ) / ( max - min ) );
+
+// 					data[ k * 4 ] = Math.round( color.r * 255 );
+// 					data[ k * 4 + 1 ] = Math.round( color.g * 255 );
+// 					data[ k * 4 + 2 ] = Math.round( color.b * 255 );
+// 					data[ k * 4 + 3 ] = 255;
+
+// 					k += 1;
+
+// 				}
+
+// 			}
+
+// 		}
+
+// 		ctx.putImageData( imageData, 0, 0 );
+
+// 		return canvas;
+
+// 	}
+// };
+
+// var ColorMapKeywords = {
+
+// 	"rainbow": [[ 0.0, 0x0000FF ], [ 0.2, 0x00FFFF ], [ 0.5, 0x00FF00 ], [ 0.8, 0xFFFF00 ], [ 1.0, 0xFF0000 ]],
+// 	"cooltowarm": [[ 0.0, 0x3C4EC2 ], [ 0.2, 0x9BBCFF ], [ 0.5, 0xDCDCDC ], [ 0.8, 0xF6A385 ], [ 1.0, 0xB40426 ]],
+// 	"blackbody": [[ 0.0, 0x000000 ], [ 0.2, 0x780000 ], [ 0.5, 0xE63200 ], [ 0.8, 0xFFFF00 ], [ 1.0, 0xFFFFFF ]],
+// 	"grayscale": [[ 0.0, 0x000000 ], [ 0.2, 0x404040 ], [ 0.5, 0x7F7F80 ], [ 0.8, 0xBFBFBF ], [ 1.0, 0xFFFFFF ]]
+
+// };
