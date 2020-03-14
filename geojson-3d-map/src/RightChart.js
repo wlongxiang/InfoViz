@@ -408,7 +408,7 @@ export function initChart(data, main) {
                 color: '#252525'
             },
             inRange: {
-                colorLightness: [1, 0.5]
+                colorLightness: [0.8, 0.5]
             },
             outOfRange: {
                 color: ['rgba(255,255,255,.2)']
