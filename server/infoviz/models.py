@@ -119,21 +119,8 @@ class DjangoSession(models.Model):
 
 
 class Gemeente(models.Model):
-    gemeente = models.TextField(db_column='Gemeente', blank=True, null=True)  # Field name made lowercase.
-    gemiddeldeverkoopprijs = models.TextField(db_column='Gemiddeldeverkoopprijs', blank=True, null=True)  # Field name made lowercase.
-    gemeentecode = models.IntegerField(db_column='Gemeentecode', blank=True, null=True)  # Field name made lowercase.
-    gemeentenaam = models.TextField(db_column='Gemeentenaam', blank=True, null=True)  # Field name made lowercase.
-    provinciecode = models.IntegerField(db_column='Provinciecode', blank=True, null=True)  # Field name made lowercase.
-    provincienaam = models.TextField(db_column='Provincienaam', blank=True, null=True)  # Field name made lowercase.
-    id = models.AutoField(unique=True, blank=True, null=False, primary_key=True)
-
-    class Meta:
-        managed = True
-        db_table = 'gemeente'
-
-
-class Summary(models.Model):
-    id = models.AutoField(unique=True, blank=True, null=False, primary_key=True)
+    id = models.AutoField(unique=True, primary_key=True)
+    gemeentenaam = models.TextField(blank=True, null=True)
     province = models.TextField(blank=True, null=True)
     electricity = models.IntegerField(blank=True, null=True)
     gas = models.IntegerField(blank=True, null=True)
@@ -208,6 +195,96 @@ class Summary(models.Model):
     meerpersoonshuishoudenszonderkinderen = models.IntegerField(db_column='Meerpersoonshuishoudenszonderkinderen', blank=True, null=True)  # Field name made lowercase.
     meerpersoonshuishoudensmetkinderen = models.IntegerField(db_column='Meerpersoonshuishoudensmetkinderen', blank=True, null=True)  # Field name made lowercase.
     gemiddeldehuishoudensgrootte = models.FloatField(db_column='Gemiddeldehuishoudensgrootte', blank=True, null=True)  # Field name made lowercase.
+    housing_price = models.IntegerField(blank=True, null=True)
+    transport = models.IntegerField(blank=True, null=True)
+    area = models.FloatField(blank=True, null=True)
+    transport_per_km2 = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'gemeente'
+
+
+class Summary(models.Model):
+    id = models.AutoField(unique=True, primary_key=True)
+    province = models.TextField(blank=True, null=True)
+    electricity = models.IntegerField(blank=True, null=True)
+    gas = models.IntegerField(blank=True, null=True)
+    totaalmannenenvrouwen = models.IntegerField(db_column='Totaalmannenenvrouwen', blank=True, null=True)  # Field name made lowercase.
+    number_0tot5jaar = models.IntegerField(db_column='0tot5jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_5tot10jaar = models.IntegerField(db_column='5tot10jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_10tot15jaar = models.IntegerField(db_column='10tot15jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_15tot20jaar = models.IntegerField(db_column='15tot20jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_20tot25jaar = models.IntegerField(db_column='20tot25jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_25tot30jaar = models.IntegerField(db_column='25tot30jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_30tot35jaar = models.IntegerField(db_column='30tot35jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_35tot40jaar = models.IntegerField(db_column='35tot40jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_40tot45jaar = models.IntegerField(db_column='40tot45jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_45tot50jaar = models.IntegerField(db_column='45tot50jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_50tot55jaar = models.IntegerField(db_column='50tot55jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_55tot60jaar = models.IntegerField(db_column='55tot60jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_60tot65jaar = models.IntegerField(db_column='60tot65jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_65tot70jaar = models.IntegerField(db_column='65tot70jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_70tot75jaar = models.IntegerField(db_column='70tot75jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_75tot80jaar = models.IntegerField(db_column='75tot80jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_80tot85jaar = models.IntegerField(db_column='80tot85jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_85tot90jaar = models.IntegerField(db_column='85tot90jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_90tot95jaar = models.IntegerField(db_column='90tot95jaar', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_95jaarofouder = models.IntegerField(db_column='95jaarofouder', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    totaalmannen = models.IntegerField(db_column='Totaalmannen', blank=True, null=True)  # Field name made lowercase.
+    number_0tot5jaar_1 = models.IntegerField(db_column='0tot5jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_5tot10jaar_1 = models.IntegerField(db_column='5tot10jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_10tot15jaar_1 = models.IntegerField(db_column='10tot15jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_15tot20jaar_1 = models.IntegerField(db_column='15tot20jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_20tot25jaar_1 = models.IntegerField(db_column='20tot25jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_25tot30jaar_1 = models.IntegerField(db_column='25tot30jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_30tot35jaar_1 = models.IntegerField(db_column='30tot35jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_35tot40jaar_1 = models.IntegerField(db_column='35tot40jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_40tot45jaar_1 = models.IntegerField(db_column='40tot45jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_45tot50jaar_1 = models.IntegerField(db_column='45tot50jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_50tot55jaar_1 = models.IntegerField(db_column='50tot55jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_55tot60jaar_1 = models.IntegerField(db_column='55tot60jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_60tot65jaar_1 = models.IntegerField(db_column='60tot65jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_65tot70jaar_1 = models.IntegerField(db_column='65tot70jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_70tot75jaar_1 = models.IntegerField(db_column='70tot75jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_75tot80jaar_1 = models.IntegerField(db_column='75tot80jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_80tot85jaar_1 = models.IntegerField(db_column='80tot85jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_85tot90jaar_1 = models.IntegerField(db_column='85tot90jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_90tot95jaar_1 = models.IntegerField(db_column='90tot95jaar.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_95jaarofouder_1 = models.IntegerField(db_column='95jaarofouder.1', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    totaalvrouwen = models.IntegerField(db_column='Totaalvrouwen', blank=True, null=True)  # Field name made lowercase.
+    number_0tot5jaar_2 = models.IntegerField(db_column='0tot5jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_5tot10jaar_2 = models.IntegerField(db_column='5tot10jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_10tot15jaar_2 = models.IntegerField(db_column='10tot15jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_15tot20jaar_2 = models.IntegerField(db_column='15tot20jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_20tot25jaar_2 = models.IntegerField(db_column='20tot25jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_25tot30jaar_2 = models.IntegerField(db_column='25tot30jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_30tot35jaar_2 = models.IntegerField(db_column='30tot35jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_35tot40jaar_2 = models.IntegerField(db_column='35tot40jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_40tot45jaar_2 = models.IntegerField(db_column='40tot45jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_45tot50jaar_2 = models.IntegerField(db_column='45tot50jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_50tot55jaar_2 = models.IntegerField(db_column='50tot55jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_55tot60jaar_2 = models.IntegerField(db_column='55tot60jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_60tot65jaar_2 = models.IntegerField(db_column='60tot65jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_65tot70jaar_2 = models.IntegerField(db_column='65tot70jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_70tot75jaar_2 = models.IntegerField(db_column='70tot75jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_75tot80jaar_2 = models.IntegerField(db_column='75tot80jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_80tot85jaar_2 = models.IntegerField(db_column='80tot85jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_85tot90jaar_2 = models.IntegerField(db_column='85tot90jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_90tot95jaar_2 = models.IntegerField(db_column='90tot95jaar.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    number_95jaarofouder_2 = models.IntegerField(db_column='95jaarofouder.2', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it wasn't a valid Python identifier.
+    totaalpersonenmetmigratieachtergrond = models.IntegerField(db_column='Totaalpersonenmetmigratieachtergrond', blank=True, null=True)  # Field name made lowercase.
+    personenmeteenwestersemigratieachtergrond = models.IntegerField(db_column='Personenmeteenwestersemigratieachtergrond', blank=True, null=True)  # Field name made lowercase.
+    personenmeteenniet_westersemigratieachtergrond = models.IntegerField(db_column='Personenmeteenniet-westersemigratieachtergrond', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    totaalparticulierehuishoudens = models.IntegerField(db_column='Totaalparticulierehuishoudens', blank=True, null=True)  # Field name made lowercase.
+    eenpersoonshuishoudens = models.IntegerField(db_column='Eenpersoonshuishoudens', blank=True, null=True)  # Field name made lowercase.
+    meerpersoonshuishoudenszonderkinderen = models.IntegerField(db_column='Meerpersoonshuishoudenszonderkinderen', blank=True, null=True)  # Field name made lowercase.
+    meerpersoonshuishoudensmetkinderen = models.IntegerField(db_column='Meerpersoonshuishoudensmetkinderen', blank=True, null=True)  # Field name made lowercase.
+    gemiddeldehuishoudensgrootte = models.FloatField(db_column='Gemiddeldehuishoudensgrootte', blank=True, null=True)  # Field name made lowercase.
+    housing_price = models.FloatField(blank=True, null=True)
+    transport = models.IntegerField(blank=True, null=True)
+    area = models.FloatField(blank=True, null=True)
+    transport_per_km2 = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = True

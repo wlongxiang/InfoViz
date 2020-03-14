@@ -1,15 +1,15 @@
 var center = new Array();
-center['Groningen'] = {x: -2.2308402657508846, y: -2.649917304515839, z: 0}
-center['Friesland'] = {x: -0.9728308096528048, y: -2.5048851370811462, z: 0}
-center['Drenthe'] = {x: -2.103163361549377, y: -2.0826888680458073, z: 0}
-center['Noord-Holland'] = {x: 0.22963106632232697, y: -1.3353348970413208, z: 0}
-center['Flevoland'] = {x: -0.6127708628773686, y: -1.2500718832015993, z: 0}
-center['Overijssel'] = {x: -1.85017853975296, y: -1.112329244613648, z: 0}
-center['Zuid-Holland'] = {x: 0.9293583519756794, y: 0.02876299619674703, z: 0}
-center['Utrecht'] = {x: -0.15333449840545652, y: -0.18537916243076327, z: 0}
-center['Gelderland'] = {x: -1.1356994584202766, y: -0.29426506161689786, z: 0}
-center['Noord-Brabant'] = {x: -0.026888310909271476, y: 1.0674385130405426, z: 0}
-center['Limburg'] = {x: -1.1119238138198857, y: 1.6482849717140196, z: 0}
+center['Groningen'] = { x: -2.2308402657508846, y: -2.649917304515839, z: 0 }
+center['Friesland'] = { x: -0.9728308096528048, y: -2.5048851370811462, z: 0 }
+center['Drenthe'] = { x: -2.103163361549377, y: -2.0826888680458073, z: 0 }
+center['Noord-Holland'] = { x: 0.22963106632232697, y: -1.3353348970413208, z: 0 }
+center['Flevoland'] = { x: -0.6127708628773686, y: -1.2500718832015993, z: 0 }
+center['Overijssel'] = { x: -1.85017853975296, y: -1.112329244613648, z: 0 }
+center['Zuid-Holland'] = { x: 0.9293583519756794, y: 0.02876299619674703, z: 0 }
+center['Utrecht'] = { x: -0.15333449840545652, y: -0.18537916243076327, z: 0 }
+center['Gelderland'] = { x: -1.1356994584202766, y: -0.29426506161689786, z: 0 }
+center['Noord-Brabant'] = { x: -0.026888310909271476, y: 1.0674385130405426, z: 0 }
+center['Limburg'] = { x: -1.1119238138198857, y: 1.6482849717140196, z: 0 }
 
 import * as d3 from 'd3-geo';
 import * as TWEEN from 'tween'
@@ -17,17 +17,17 @@ import * as THREE from 'three'
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Lut } from "./Lut.js";
 
-var lut = new Lut( 'rainbow', 512 );
+var lut = new Lut('rainbow', 512);
 var uiScene = new THREE.Scene();
-var sprite = new THREE.Sprite( new THREE.SpriteMaterial( {
+var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
   rotation: -Math.PI / 2,
-  map: new THREE.CanvasTexture( lut.createCanvas() )
-} ) );
+  map: new THREE.CanvasTexture(lut.createCanvas())
+}));
 // sprite.position = new THREE.Vector2(1, 1);
 sprite.scale.x = 0.0625;
 sprite.position.x = 0.5;
 sprite.position.y = -0.9;
-uiScene.add( sprite );
+uiScene.add(sprite);
 
 // const THREE = window.THREE;
 const width = window.innerWidth * 0.45;
@@ -44,9 +44,9 @@ function animate() {
   requestAnimationFrame(animate);
   renderer.clear();
   renderer.render(scene, camera);
-  const orthoCamera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 1, 2 );
-  orthoCamera.position.set( 0.5, 0, 1 );
-  renderer.render( uiScene, orthoCamera );
+  const orthoCamera = new THREE.OrthographicCamera(- 1, 1, 1, - 1, 1, 2);
+  orthoCamera.position.set(0.5, 0, 1);
+  renderer.render(uiScene, orthoCamera);
   TWEEN.update();
 
 }
@@ -97,7 +97,7 @@ function setHelper() {
 
 function init() {
   scene.background = new THREE.Color(0xffffff);
-  
+
   setCamera({ x: 0, y: 0, z: 50 });
   setLight();
   setRender();
@@ -113,7 +113,6 @@ init();
 // Init scene
 export default class ThreeMap {
   constructor() {
-    this.color = '#006de0';
     this.canvas = document.getElementById('center');
   }
 
@@ -157,7 +156,7 @@ export default class ThreeMap {
       this.mouse.y = -(event.clientY / height) * 2 + 1;
       this.raycaster.setFromCamera(this.mouse, camera);
       const intersects = this.raycaster.intersectObjects(this.meshes);
-  
+
       if (intersects.length > 0) {
         if (this.selectObj != intersects[0].object.parent) {
           this.hoverEndFunction(event)
@@ -165,12 +164,10 @@ export default class ThreeMap {
           this.setAreaAlpha(this.selectObj);
           this.hoverFunction(event, this.selectObj);
         }
-      }else if (this.selectObj != null){
-        // console.log(this.selectObj);
+      } else if (this.selectObj != null) {
         this.selectObj = null;
         this.clearAreaAlpha()
         this.hoverEndFunction(event)
-        console.log(this.selectObj);
       }
     }
   }
@@ -185,10 +182,8 @@ export default class ThreeMap {
       if (intersects.length > 0) {
         if (this.skip) {
           this.skip = false;
-        }else {
+        } else {
           this.clickFunction(event, intersects[0].object.parent);
-          console.log(intersects[0].object.name)
-          console.log(getCenterPoint(intersects[0].object))
         }
       }
     }
@@ -206,7 +201,6 @@ export default class ThreeMap {
     });
 
     // set color
-    console.log('I am here')
     g.children.forEach(mesh => {
       mesh.material.opacity = 0.4
     });
@@ -354,7 +348,6 @@ export default class ThreeMap {
       bevelEnabled: false,
     });
     const material = new THREE.MeshBasicMaterial({
-      color: this.color,
       transparent: true,
       opacity: 0.6,
       side: THREE.DoubleSide,
@@ -385,7 +378,6 @@ export default class ThreeMap {
   }
 
   loadData(data) {
-    this.depth = data;
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
@@ -405,7 +397,6 @@ export default class ThreeMap {
 
   loadColorData(data) {
     this.colorData = data
-    this.depth = data;
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
@@ -414,7 +405,7 @@ export default class ThreeMap {
     this.meshes.forEach(mesh => {
       const name = mesh.name
       const value = k * (data[name] - min_value) + 0.5
-      const lutColor = lut.getColor( value );
+      const lutColor = lut.getColor(value);
       mesh.material.color.set(lutColor);
     })
   }
@@ -445,7 +436,6 @@ export default class ThreeMap {
 // Init scene
 export class GMap {
   constructor() {
-    this.color = '#006de0';
     this.canvas = document.getElementById('center');
   }
 
@@ -481,7 +471,16 @@ export class GMap {
     const intersects = this.raycaster.intersectObjects(this.meshes);
 
     if (intersects.length > 0) {
-      this.setAreaAlpha(intersects[0].object.parent);
+      if (this.selectObj != intersects[0].object.parent) {
+        this.hoverEndFunction(event)
+        this.selectObj = intersects[0].object.parent
+        this.setAreaAlpha(this.selectObj);
+        this.hoverFunction(event, this.selectObj);
+      }
+    } else if (this.selectObj != null) {
+      this.selectObj = null;
+      this.clearAreaAlpha()
+      this.hoverEndFunction(event)
     }
   }
 
@@ -502,6 +501,18 @@ export class GMap {
 
   }
 
+  on(eventName, func) {
+    if (eventName === 'click') {
+      this.clickFunction = func;
+    } else if (eventName == 'mouseover') {
+      this.hoverFunction = func;
+    }
+  }
+
+  hoverEnd(func) {
+    this.hoverEndFunction = func;
+  }
+
   /**
    * @desc set region color
    */
@@ -509,15 +520,22 @@ export class GMap {
     // set to default
     g.parent.children.forEach(gs => {
       gs.children.forEach(mesh => {
-        mesh.material.color.set(this.color);
+        mesh.material.opacity = 0.6
       });
     });
 
     // set color
     g.children.forEach(mesh => {
-      mesh.material.color.set(color);
+      mesh.material.opacity = 0.4
     });
   }
+
+  clearAreaAlpha() {
+    this.meshes.forEach(mesh => {
+      mesh.material.opacity = 0.6
+    });
+  }
+  
   /**
    * @desc creating map
    */
@@ -637,7 +655,6 @@ export class GMap {
       bevelEnabled: false,
     });
     const material = new THREE.MeshBasicMaterial({
-      color: this.color,
       transparent: true,
       opacity: 0.6,
       side: THREE.DoubleSide,
@@ -668,7 +685,6 @@ export class GMap {
   }
 
   loadData(data) {
-    this.depth = data;
     const values = Object.keys(data).map(function (key) {
       const value = data[key];
       if (typeof (value) == 'string') {
@@ -697,13 +713,48 @@ export class GMap {
       }
       line.position.z = res;
     })
+
+    
+  }
+
+  loadColorData(data) {
+    this.colorData = data
+    const values = Object.keys(data).map(function (key) {
+      const value = data[key];
+      if (typeof (value) == 'string') {
+        return value.replace(',', '') - 0;
+      } else {
+        return 20;
+      }
+    });
+    const k = 1 / (Math.max(...values) - Math.min(...values))
+    const min_value = Math.min(...values)
+    this.meshes.forEach(mesh => {
+      const name = mesh.name;
+      const value = data[name];
+      var res = 20;
+      if (typeof (value) == 'string') {
+        res = k * (value.replace(',', '') - min_value) + 0.5;
+      }
+      const lutColor = lut.getColor(res);
+      mesh.material.color.set(lutColor);
+    })
+
+    // const k = 1 / (Math.max(...values) - Math.min(...values))
+    // const min_value = Math.min(...values)
+    // this.meshes.forEach(mesh => {
+    //   const name = mesh.name
+    //   const value = k * (data[name] - min_value) + 0.5
+    //   const lutColor = lut.getColor(value);
+    //   console.log(value);
+
+    //   mesh.material.color.set(lutColor);
+    // })
   }
 
 
 
   moveToCenter(name, wait, time) {
-    console.log(center)
-    console.log(name)
     const coordinate = center[name]
     new TWEEN.Tween(this.group.position)
       .delay(wait)
