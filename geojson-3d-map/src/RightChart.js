@@ -113,30 +113,94 @@ export function initChart(data, main) {
     }
 
     var option = {
-        title:{
-            text: "Elec Consumption",
-            left: "center",
-            bottom: '-1%',
+        title: {
+            text: 'Electricity Comparision',
+            x: 'center'
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series: [
-            {
-                name: 'Province (Unit:KWh)',
-                type: 'pie',
-                radius: '70%',
-                center: ['50%', '50%'],
-                data: convertData(data),
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
+        calculable: true,
+        polar: {
+            center: ['50%', '50%'],
+            radius: '70%'
+        },
+        radiusAxis: {
+            // 极坐标半径刻度
+            min: 0,
+            max: 100,
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                show: false
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed',
+                    color: '#737373'
                 }
             }
+        },
+        angleAxis: {
+            type: 'category',
+            clockwise: false,
+            splitLine: {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                    width: 1,
+                    type: 'dashed',
+                    color: '#737373'
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#737373'
+                }
+            },
+        },
+        series: [{
+            name: '半径模式',
+            type: 'pie',
+            clockwise: false,
+            radius: ['15.6%', '70%'],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            hoverOffset: 0,
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            lableLine: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data: [{value: 17873140.16, name: 'Drenthe'},
+                    {value: 8952013, name: 'Flevoland'},
+                    {value: 28252051.98, name: 'Friesland'},
+                    {value: 79044282.81, name: 'Gelderland'},
+                    {value: 27654950.4, name: 'Groningen'},
+                    {value: 46366091.45, name: 'Limburg'},
+                    {value: 96883902.48, name: 'Noord-Brabant'},
+                    {value: 92043387, name: 'Noord-Holland'},
+                    {value: 29513475.84, name: 'Overijssel'},
+                    {value: 41422905, name: 'Utrecht'},
+                    {value: 93557965, name: 'Zuid-Holland'},
+            ]
+        }, 
         ]
     };
     pieRightChart.resize();
