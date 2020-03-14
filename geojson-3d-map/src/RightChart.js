@@ -17,25 +17,94 @@ var scatterChart = echarts.init(document.getElementById("sc_container"));
 
 export function initChart(data) {
     var option = {
+        title: {
+            text: 'Energy Comparision',
+            x: 'center'
+        },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series: [
-            {
-                name: 'Province (Unit:KWh)',
-                type: 'pie',
-                radius: '90%',
-                center: ['50%', '50%'],
-                data: convertData(data),
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
+        calculable: true,
+        polar: {
+            center: ['50%', '50%'],
+            radius: '70%'
+        },
+        radiusAxis: {
+            // 极坐标半径刻度
+            min: 0,
+            max: 100,
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                show: false
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed',
+                    color: '#737373'
                 }
             }
+        },
+        angleAxis: {
+            type: 'category',
+            clockwise: false,
+            splitLine: {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                    width: 1,
+                    type: 'dashed',
+                    color: '#737373'
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#737373'
+                }
+            },
+        },
+        series: [{
+            name: '半径模式',
+            type: 'pie',
+            clockwise: false,
+            radius: ['15.6%', '70%'],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            hoverOffset: 0,
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            lableLine: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data: [{value: 17873140.16, name: 'Drenthe'},
+                    {value: 8952013, name: 'Flevoland'},
+                    {value: 28252051.98, name: 'Friesland'},
+                    {value: 79044282.81, name: 'Gelderland'},
+                    {value: 27654950.4, name: 'Groningen'},
+                    {value: 46366091.45, name: 'Limburg'},
+                    {value: 96883902.48, name: 'Noord-Brabant'},
+                    {value: 92043387, name: 'Noord-Holland'},
+                    {value: 29513475.84, name: 'Overijssel'},
+                    {value: 41422905, name: 'Utrecht'},
+                    {value: 93557965, name: 'Zuid-Holland'},
+            ]
+        }, 
         ]
     };
     pieLeftChart.resize();
@@ -44,6 +113,11 @@ export function initChart(data) {
     }
 
     var option = {
+        title:{
+            text: "Elec Consumption",
+            left: "center",
+            bottom: '-1%',
+        },
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -52,7 +126,7 @@ export function initChart(data) {
             {
                 name: 'Province (Unit:KWh)',
                 type: 'pie',
-                radius: '90%',
+                radius: '70%',
                 center: ['50%', '50%'],
                 data: convertData(data),
                 emphasis: {
@@ -71,61 +145,89 @@ export function initChart(data) {
     }
 
     var option = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        title: {
+                text: "Comparison",
+                left: "center"
             },
-            //     formatter: function(params){return Math.max(params.value,-params.value)}
-
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            },
+       //     formatter: function(params){return Math.max(params.value,-params.value)}
+            
             formatter: function (params) {
-                return params[0].name +
-                    "<br>Total: " + params[0].value +
-                    "<br>Province:" + -params[1].value;
-            }
+                        return params[0].name +
+                            "<br>Province: " + -params[3].value + 
+                            "<br>Min:" + params[0].value +
+                            "<br>Avg:" + params[1].value +
+                            "<br>Max:" + params[2].value;
+                    }
         },
         grid: {
+            radius: '2%',
             left: '3%',
-            right: '4%',
+            right: '20%',
             bottom: '3%',
             containLabel: true
         },
-        xAxis: [
+        xAxis : [
             {
-                type: 'value'
+                type : 'value',
             }
         ],
-        yAxis: [
+        yAxis : [
             {
-                type: 'category',
-                axisTick: { show: false },
-                data: ['Polulation', 'Gas', 'Electricity', 'Hoursing Price', 'Transportation']
+                type : 'category',
+                axisTick : {show: false},
+                data : ['Polulation','Gas','Electricity','Hoursing Price','Transportation']
             }
         ],
-        series: [
-
+        series : [
             {
-                name: 'Province',
+                name:'min',
+                type:'bar',
+                stack: '总量',
+                label: {
+                      show: true,
+                      position: 'insideRight'
+                },
+                data:[1703778, 5615641.12,1553846.1, 350000, 350297]
+            },
+            {
+                name: 'avg',
                 type: 'bar',
                 stack: '总量',
                 label: {
-                    normal: {
-                        show: true
-                    }
+                      show: true,
+                      position: 'insideRight'
                 },
-                data: [1703778, 5615641.12, 1553846.1, 350000, 350297]
+                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
             },
+    
             {
-                name: 'Total',
+                name: 'max',
                 type: 'bar',
+                stack: '总量',
+                label: {
+                      show: true,
+                      position: 'insideRight'
+                },
+                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
+            },
+    
+    
+            {
+                name:'Province',
+                type:'bar',
                 stack: '总量',
                 label: {
                     normal: {
                         show: true,
-                        formatter: function (params) { return -params.value }
+                        formatter: function(params){return -params.value}
                     }
                 },
-                data: [-498130, -178731.16, -517703.35, -230000, -125035]
+                data:[-498130, -178731.16,-517703.35, -230000, -125035]
             }
         ]
     };
@@ -215,7 +317,7 @@ export function initChart(data) {
             name: 'Gas',
             nameGap: 16,
             nameTextStyle: {
-                color: '#fff',
+                color: '#252525',
                 fontSize: 14
             },
             max: 97000000,
@@ -224,18 +326,18 @@ export function initChart(data) {
             },
             axisLine: {
                 lineStyle: {
-                    color: '#777'
+                    color: '#252525'
                 }
             },
             axisTick: {
                 lineStyle: {
-                    color: '#777'
+                    color: '#252525'
                 }
             },
             axisLabel: {
                 formatter: '{value}',
                 textStyle: {
-                    color: '#fff'
+                    color: '#252525'
                 }
             }
         },
@@ -245,18 +347,18 @@ export function initChart(data) {
             nameLocation: 'end',
             nameGap: 20,
             nameTextStyle: {
-                color: '#fff',
+                color: '#252525',
                 fontSize: 16
             },
             max: 262000000,
             axisLine: {
                 lineStyle: {
-                    color: '#777'
+                    color: '#252525'
                 }
             },
             axisTick: {
                 lineStyle: {
-                    color: '#777'
+                    color: '#252525'
                 }
             },
             splitLine: {
@@ -264,24 +366,24 @@ export function initChart(data) {
             },
             axisLabel: {
                 textStyle: {
-                    color: '#fff'
+                    color: '#252525'
                 }
             }
         },
         visualMap: [{
-            left: 'right',
-            top: '30%',
+            left: '65%',
+            top: '35%',
             dimension: 3,
             min: 130000,
             max: 320000,
             itemWidth: 30,
-            itemHeight: 120,
+            itemHeight: 80,
             calculable: true,
             precision: 0.1,
-            text: ['Luminance: Price'],
+            text: [''],
             textGap: 20,
             textStyle: {
-                color: '#fff'
+                color: '#252525'
             },
             inRange: {
                 symbolSize: [10, 70]
@@ -300,18 +402,18 @@ export function initChart(data) {
             }
         },
         {
-            left: 'right',
-            bottom: '20%',
+            left: '75%',
+            bottom: '15%',
             dimension: 2,
             min: 411665,
             max: 3612300,
-            itemHeight: 120,
+            itemHeight: 80,
             calculable: true,
             precision: 0.1,
-            text: ['Size: Population'],
+            text: [''],
             textGap: 20,
             textStyle: {
-                color: '#fff'
+                color: '#252525'
             },
             inRange: {
                 colorLightness: [1, 0.5]
