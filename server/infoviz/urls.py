@@ -15,6 +15,8 @@ urlpatterns = [
         # ex: /infoviz/summary/gas,
     path('summary/<str:rtype>/', views.summary),
 
-    path('gemeenten/<str:gemeenten>/<str:rtype>', views.gemeenten_detail)
+    path('gemeenten/<str:gemeenten>/<str:rtype>', views.gemeenten_detail),
+
+    path('summary_main/<str:rtype>', views.summary_main)
 
 ]

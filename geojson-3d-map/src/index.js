@@ -35,24 +35,44 @@ const getDetailData = (gemeenten, type) => {
   })
 }
 
+const getSummaryMain = () => {
+  return new Promise(function (resolve, reject) {
+    $.get('/infoviz/summary_main/1', pro => {
+      resolve(pro);
+    })
+  })
+}
+
+const getSummaryComparison = () => {
+  return new Promise(function (resolve, reject) {
+    $.get('/infoviz/summary/' + gemeenten +'/'+ type, pro => {
+      resolve(pro);
+    })
+  })
+}
+
 getSummaryData('electricity').then(data => {
-  setRight(data);
-  $.get('/assets/map/Netherlands.json', d => {
-    map.setMapData(d);
-    map.on('click', (e, g) => {
-      needZoomIn(g.data.properties.locname);
-    });
-    map.on('mouseover', (e, g) => {
-        rightHoverOn(g.data.properties.locname);
-    });
-    map.hoverEnd(() => {
-       rightHoverEnd()
-    });
-    map.loadData(data);
-    map.loadColorData(data);
-    canvas.appendChild(map.renderer().domElement);
-  })}
-)
+  getSummaryMain().then(main => {
+    setRight(data, main);
+    $.get('/assets/map/Netherlands.json', d => {
+      map.setMapData(d);
+      map.on('click', (e, g) => {
+        needZoomIn(g.data.properties.locname);
+      });
+      map.on('mouseover', (e, g) => {
+          rightHoverOn(g.data.properties.locname);
+      });
+      map.hoverEnd(() => {
+         rightHoverEnd()
+      });
+      map.loadData(data);
+      map.loadColorData(data);
+      canvas.appendChild(map.renderer().domElement);
+    })
+  })
+})
+
+
 
 function needZoomIn(gemeenten) {
   var key = $(".radio_data:checked").attr('id')
@@ -60,6 +80,7 @@ function needZoomIn(gemeenten) {
 
   getDetailData(gemeenten, key).then(data => {
     getDetailData(gemeenten, colorKey).then(color => {
+
         // setRight(data)
         $.get('/assets/map/' + gemeenten + '.json', d => {
           const gmap = new GMap()
@@ -101,7 +122,8 @@ $('input').on('ifChecked', function (event) {
 });
 
 /// right section
-function setRight(data) {
-  initChart(data);
+function setRight(data, main) {
+  initChart(data, main);
 }
+
 

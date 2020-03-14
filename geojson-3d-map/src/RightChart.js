@@ -15,7 +15,7 @@ var pieRightChart = echarts.init(document.getElementById("pie_right_container"))
 var popChart = echarts.init(document.getElementById("pop_container"));
 var scatterChart = echarts.init(document.getElementById("sc_container"));
 
-export function initChart(data) {
+export function initChart(data, main) {
     var option = {
         title: {
             text: 'Energy Comparision',
@@ -237,19 +237,11 @@ export function initChart(data) {
         popChart.setOption(option, true);
     }
 
-    var data = [
-        [17873140.16, 51770327.35, 498130, 250000, "Drenthe"],
-        [8952013, 38240724, 411665, 210000, "Flevoland"],
-        [28252051.98, 68009281.39, 672890, 250952, "Friesland"],
-        [79044282.81, 215323726.5, 2116595, 234516, "Gelderland"],
-        [27654950.4, 56091044.76, 588370, 136712, "Groningen"],
-        [46366091.45, 111304381.7, 1122505, 254318, "Limburg"],
-        [96883902.48, 261214934.1, 2653230, 310998, "Noord-Brabant"],
-        [92043387, 246645516, 2906285, 291845, "Noord-Holland"],
-        [29513475.84, 108346037.3, 1097400, 147621, "Overijssel"],
-        [41422905, 119615584, 1358525, 324567, "Utrecht"],
-        [93557965, 277284783, 3612300, 278901, "Zuid-Holland"]
-    ];
+    var main_data = Object.keys(main).map(function (key) {
+        return main[key];
+    });
+
+    console.log(main_data)
 
 
     var schema = [{
@@ -374,8 +366,8 @@ export function initChart(data) {
             left: '65%',
             top: '35%',
             dimension: 3,
-            min: 130000,
-            max: 320000,
+            min: 1000,
+            max: 22000,
             itemWidth: 30,
             itemHeight: 80,
             calculable: true,
@@ -405,8 +397,8 @@ export function initChart(data) {
             left: '75%',
             bottom: '15%',
             dimension: 2,
-            min: 411665,
-            max: 3612300,
+            min: 200000,
+            max: 3500000,
             itemHeight: 80,
             calculable: true,
             precision: 0.1,
@@ -435,7 +427,7 @@ export function initChart(data) {
             name: '',
             type: 'scatter',
             itemStyle: itemStyle,
-            data: data
+            data: main_data
         },
         ]
     };
