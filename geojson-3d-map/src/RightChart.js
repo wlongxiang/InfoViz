@@ -357,6 +357,7 @@ export function initChart(data, main) {
                 show: false
             },
             axisLabel: {
+                formatter: '{value}',
                 textStyle: {
                     color: '#252525'
                 }
