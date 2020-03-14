@@ -130,9 +130,9 @@ export default class ThreeMap {
    */
   init() {
     this.drawMap();
-    btNetherlands.addEventListener("click", this.btnClick.bind(this), false);
-    this.canvas.addEventListener('click', this.mouseEvent.bind(this), false);
-    this.canvas.addEventListener('mousemove', this.mouseoverEvent.bind(this), false);
+    btNetherlands.addEventListener("click", this.btnClick.bind(this), true);
+    this.canvas.addEventListener('click', this.mouseEvent.bind(this), true);
+    this.canvas.addEventListener('mousemove', this.mouseoverEvent.bind(this), true);
     this.isHide = false;
     this.skip = false;
   }
@@ -140,6 +140,7 @@ export default class ThreeMap {
   btnClick(event) {
     this.show();
     this.gmap.remove();
+    this.gmap = null;
     this.skip = true;
   }
 
@@ -452,12 +453,14 @@ export class GMap {
    * @desc init scene
    */
   init() {
+    this.dead = false;
     this.drawMap();
-    this.canvas.addEventListener('click', this.mouseEvent.bind(this));
-    this.canvas.addEventListener('mousemove', this.mouseoverEvent.bind(this), false);
+    this.canvas.addEventListener('click', this.mouseEvent.bind(this), true);
+    this.canvas.addEventListener('mousemove', this.mouseoverEvent.bind(this), true);
   }
 
   mouseoverEvent(event) {
+    if (!this.dead) {
     if (!this.raycaster) {
       this.raycaster = new THREE.Raycaster();
     }
@@ -483,11 +486,13 @@ export class GMap {
       this.hoverEndFunction(event)
     }
   }
+  }
 
   /**
    * @desc handle mouse event
    */
   mouseEvent(event) {
+    if (!this.dead) {
     if (!this.raycaster) {
       this.raycaster = new THREE.Raycaster();
     }
@@ -498,7 +503,7 @@ export class GMap {
     const intersects = this.raycaster.intersectObjects(this.meshes);
     if (intersects.length > 0) {
     }
-
+  }
   }
 
   on(eventName, func) {
@@ -774,9 +779,13 @@ export class GMap {
   }
 
   remove() {
+    this.group.visible = false
+    this.lineGroup.visible = false
+    this.lineGroupBottom.visible = false
     scene.remove(this.group)
     scene.remove(this.lineGroup)
     scene.remove(this.lineGroupBottom)
+    this.dead = true;
   }
 
 }

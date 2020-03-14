@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('gemeenten/<str:gemeenten>/<str:rtype>', views.gemeenten_detail),
 
-    path('summary_main/<str:rtype>', views.summary_main)
+    path('summary_main/<str:rtype>', views.summary_main),
+
+    path('summary_pop/<str:province>', views.summary_pop)
 
 ]

@@ -3,7 +3,7 @@ import './index.less';
 import ThreeMap from './ThreeMap.js';
 import { GMap } from './ThreeMap.js';
 
-import { initChart, rightHoverOn, updateRight, rightHoverEnd }from './RightChart.js'
+import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, updateRightColor }from './RightChart.js'
 // import { CineonToneMapping } from './assets/plugin/threejs/three';
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
@@ -17,6 +17,19 @@ var right = document.getElementById("right");
 
 // create map
 const map = new ThreeMap();
+map.on('click', (e, g) => {
+  needZoomIn(g.data.properties.locname);
+});
+map.on('mouseover', (e, g) => {
+  const name = g.data.properties.locname;
+    rightHoverOn(name);
+    getSummaryComparison(name).then(pop => {
+      loadComparison(pop)
+    })
+});
+map.hoverEnd(() => {
+   rightHoverEnd()
+});
 
 // network
 const getSummaryData = type => {
@@ -43,9 +56,9 @@ const getSummaryMain = () => {
   })
 }
 
-const getSummaryComparison = () => {
+const getSummaryComparison = (province) => {
   return new Promise(function (resolve, reject) {
-    $.get('/infoviz/summary/' + gemeenten +'/'+ type, pro => {
+    $.get('/infoviz/summary_pop/' + province , pro => {
       resolve(pro);
     })
   })
@@ -56,15 +69,6 @@ getSummaryData('electricity').then(data => {
     setRight(data, main);
     $.get('/assets/map/Netherlands.json', d => {
       map.setMapData(d);
-      map.on('click', (e, g) => {
-        needZoomIn(g.data.properties.locname);
-      });
-      map.on('mouseover', (e, g) => {
-          rightHoverOn(g.data.properties.locname);
-      });
-      map.hoverEnd(() => {
-         rightHoverEnd()
-      });
       map.loadData(data);
       map.loadColorData(data);
       canvas.appendChild(map.renderer().domElement);
@@ -83,7 +87,7 @@ function needZoomIn(gemeenten) {
 
         // setRight(data)
         $.get('/assets/map/' + gemeenten + '.json', d => {
-          const gmap = new GMap()
+          var gmap = new GMap()
           gmap.setMapData(d);
           gmap.loadData(data);
           gmap.loadColorData(color);
@@ -116,7 +120,7 @@ $('input').on('ifChecked', function (event) {
     getSummaryData(event.target.id)
     .then(data => {
       map.loadColorData(data);
-      updateRight(data);
+      updateRightColor(data);
     })
   }
 });

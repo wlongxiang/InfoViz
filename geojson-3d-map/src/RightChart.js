@@ -92,18 +92,7 @@ export function initChart(data, main) {
                     show: true
                 }
             },
-            data: [{value: 17873140.16, name: 'Drenthe'},
-                    {value: 8952013, name: 'Flevoland'},
-                    {value: 28252051.98, name: 'Friesland'},
-                    {value: 79044282.81, name: 'Gelderland'},
-                    {value: 27654950.4, name: 'Groningen'},
-                    {value: 46366091.45, name: 'Limburg'},
-                    {value: 96883902.48, name: 'Noord-Brabant'},
-                    {value: 92043387, name: 'Noord-Holland'},
-                    {value: 29513475.84, name: 'Overijssel'},
-                    {value: 41422905, name: 'Utrecht'},
-                    {value: 93557965, name: 'Zuid-Holland'},
-            ]
+            data: convertPieData(data)
         }, 
         ]
     };
@@ -188,18 +177,7 @@ export function initChart(data, main) {
                     show: true
                 }
             },
-            data: [{value: 17873140.16, name: 'Drenthe'},
-                    {value: 8952013, name: 'Flevoland'},
-                    {value: 28252051.98, name: 'Friesland'},
-                    {value: 79044282.81, name: 'Gelderland'},
-                    {value: 27654950.4, name: 'Groningen'},
-                    {value: 46366091.45, name: 'Limburg'},
-                    {value: 96883902.48, name: 'Noord-Brabant'},
-                    {value: 92043387, name: 'Noord-Holland'},
-                    {value: 29513475.84, name: 'Overijssel'},
-                    {value: 41422905, name: 'Utrecht'},
-                    {value: 93557965, name: 'Zuid-Holland'},
-            ]
+            data: convertPieData(data)
         }, 
         ]
     };
@@ -285,9 +263,7 @@ export function initChart(data, main) {
                 },
                 data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
             },
-    
-    
-            {
+                {
                 name:'Province',
                 type:'bar',
                 stack: '总量',
@@ -509,7 +485,7 @@ export function initChart(data, main) {
 
 }
 
-function convertData(data) {
+function convertPieData(data) {
     var res = Array()
     Object.keys(data).map(function (key) {
         const obj = { name: key, value: data[key] };
@@ -543,7 +519,67 @@ export function rightHoverEnd(obj) {
 export function updateRight(data) {
     pieLeftChart.setOption({
         series: [{
-            data: convertData(data)
+            data: convertPieData(data)
         }]
+    });
+}
+
+export function updateRightColor(data) {
+    pieRightChart.setOption({
+        series: [{
+            data: convertPieData(data)
+        }]
+    });
+}
+
+export function loadComparison(data) {
+    console.log(data)
+    var pop = [
+        {
+            name:'min',
+            type:'bar',
+            stack: '总量',
+            label: {
+                  show: true,
+                  position: 'insideRight'
+            },
+            data:data['min']
+        },
+        {
+            name: 'avg',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                  show: true,
+                  position: 'insideRight'
+            },
+            data: data['mean']
+        },
+
+        {
+            name: 'max',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                  show: true,
+                  position: 'insideRight'
+            },
+            data: data['max']
+        },
+            {
+            name:'Province',
+            type:'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    formatter: function(params){return -params.value}
+                }
+            },
+            data:data['province']
+        }
+    ]
+    popChart.setOption({
+        series: pop
     });
 }
