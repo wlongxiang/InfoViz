@@ -114,7 +114,7 @@ export function initChart(data, main) {
 
     var option = {
         title: {
-            text: 'Electricity Comparision',
+            text: 'Energy Comparision',
             x: 'center'
         },
         tooltip: {
@@ -238,6 +238,12 @@ export function initChart(data, main) {
         xAxis : [
             {
                 type : 'value',
+                axisLabel: {
+                    formatter: function(value){return value/1000000 + 'M'},
+                    textStyle: {
+                        color: '#252525'
+                    }
+                }
             }
         ],
         yAxis : [
@@ -391,7 +397,7 @@ export function initChart(data, main) {
                 }
             },
             axisLabel: {
-                formatter: '{value}',
+                formatter: function(value){return value/1000000 + 'M'},
                 textStyle: {
                     color: '#252525'
                 }
@@ -421,7 +427,7 @@ export function initChart(data, main) {
                 show: false
             },
             axisLabel: {
-                formatter: '{value}',
+                formatter: function(value){return value/1000000 + 'M'},
                 textStyle: {
                     color: '#252525'
                 }
