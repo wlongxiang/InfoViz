@@ -16,6 +16,6 @@ def summary(request, rtype):
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 def gemeenten_detail(request, gemeenten, rtype):
-    atest_question_list = Gemeente.objects.filter(provincienaam=gemeenten)
-    resp = {q.gemeente : getattr(q, rtype) for q in atest_question_list}
+    atest_question_list = Gemeente.objects.filter(province=gemeenten)
+    resp = {q.gemeentenaam : getattr(q, rtype) for q in atest_question_list}
     return HttpResponse(json.dumps(resp), content_type="application/json")

@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 var left = document.getElementById("left");
 setLeft();
 var canvas = document.getElementById("center");
+var datalist = document.getElementById('list_color');
 var right = document.getElementById("right");
 
 // create map
@@ -48,21 +49,35 @@ getSummaryData('electricity').then(data => {
        rightHoverEnd()
     });
     map.loadData(data);
+    map.loadColorData(data);
     canvas.appendChild(map.renderer().domElement);
   })}
 )
 
 function needZoomIn(gemeenten) {
-  getDetailData(gemeenten, 'gemiddeldeverkoopprijs').then(data => {
-    // setRight(data)
-    $.get('/assets/map/' + gemeenten + '.json', d => {
-      const gmap = new GMap()
-      gmap.setMapData(d)
-      gmap.loadData(data)
-      map.addnewmap(gmap, gemeenten)
+  var key = $(".radio_data:checked").attr('id')
+  var colorKey = $(".radio_color:checked").attr('id')
+
+  getDetailData(gemeenten, key).then(data => {
+    getDetailData(gemeenten, colorKey).then(color => {
+        // setRight(data)
+        $.get('/assets/map/' + gemeenten + '.json', d => {
+          const gmap = new GMap()
+          gmap.setMapData(d);
+          gmap.loadData(data);
+          gmap.loadColorData(color);
+          map.addnewmap(gmap, gemeenten)
+          gmap.on('mouseover', (e, g) => {
+            rightHoverOn(g.data.properties.locname);
+          });
+          gmap.hoverEnd(() => {
+            rightHoverEnd()
+          });
+        })
     })
   })
 }
+
 /// left section
 function setLeft() {
   // var slider = createD3RangeSlider(0, 100, "#slider-container");
