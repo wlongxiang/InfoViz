@@ -18,7 +18,7 @@ var scatterChart = echarts.init(document.getElementById("sc_container"));
 export function initChart(data, main) {
     var option = {
         title: {
-            text: 'Energy Comparision',
+            text: 'Gas Comparision',
             x: 'center'
         },
         tooltip: {
@@ -69,7 +69,7 @@ export function initChart(data, main) {
             },
         },
         series: [{
-            name: '半径模式',
+            name: 'Gas Comparision',
             type: 'pie',
             clockwise: false,
             radius: ['15.6%', '70%'],
@@ -103,7 +103,7 @@ export function initChart(data, main) {
 
     var option = {
         title: {
-            text: 'Energy Comparision',
+            text: 'Electricity Comparision',
             x: 'center'
         },
         tooltip: {
@@ -154,7 +154,7 @@ export function initChart(data, main) {
             },
         },
         series: [{
-            name: '半径模式',
+            name: 'Electricity Comparision',
             type: 'pie',
             clockwise: false,
             radius: ['15.6%', '70%'],
