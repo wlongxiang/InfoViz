@@ -228,7 +228,7 @@ export function initChart(data, main) {
             {
                 type : 'category',
                 axisTick : {show: false},
-                data : ['Population','Gas','Electricity','Hoursing Price','Transportation']
+                data : ['Gas','Electricity','Population','Hoursing Price','Transportation']
             }
         ],
         series : [
@@ -250,7 +250,7 @@ export function initChart(data, main) {
                       show: true,
                       position: 'insideRight'
                 },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
+                data: [1803778, 1803778, 1803778, 1803778, 1803778]
             },
     
             {
@@ -261,7 +261,7 @@ export function initChart(data, main) {
                       show: true,
                       position: 'insideRight'
                 },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
+                data: [1803778, 1803778, 1803778, 1803778, 1803778]
             },
                 {
                 name:'Province',
@@ -309,6 +309,11 @@ export function initChart(data, main) {
         name: 'Houring Price',
         index: 3,
         text: 'Houring Price (Euro)'
+    },
+    {
+        name: 'Transportation',
+        index: 4,
+        text: 'Transportation'
     },
     ];
 
