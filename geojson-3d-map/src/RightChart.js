@@ -11,6 +11,8 @@ var bar = null;
 var n_main = null;
 var n_com = null;
 var n_name = null;
+var n_elec = null;
+var n_gas = null;
 
 var pieLeftChart = echarts.init(document.getElementById("pie_left_container"));
 var pieRightChart = echarts.init(document.getElementById("pie_right_container"));
@@ -18,7 +20,9 @@ var pieRightChart = echarts.init(document.getElementById("pie_right_container"))
 var popChart = echarts.init(document.getElementById("pop_container"));
 var scatterChart = echarts.init(document.getElementById("sc_container"));
 
-export function initChart(data, main, com, name) {
+export function initChart(electricity, gas, main, com, name) {
+    n_elec = electricity;
+    n_gas = gas;
     var option = {
         title: {
             text: 'Gas Comparision',
@@ -95,7 +99,7 @@ export function initChart(data, main, com, name) {
                     show: true
                 }
             },
-            data: convertPieData(data)
+            data: convertPieData(electricity)
         }, 
         ]
     };
@@ -180,7 +184,7 @@ export function initChart(data, main, com, name) {
                     show: true
                 }
             },
-            data: convertPieData(data)
+            data: convertPieData(gas)
         }, 
         ]
     };
@@ -570,4 +574,7 @@ export function loadComparison(name, data) {
 export function back() {
     updateMain(n_main);
     loadComparison(n_name, n_com);
+    console.log(n_elec);
+    updateRight(n_elec);
+    updateRightColor(n_gas);
 }

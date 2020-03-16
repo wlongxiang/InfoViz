@@ -90,9 +90,11 @@ const getProvinceComparison = (province, gemeenten) => {
 
 getSummaryData('electricity').then(data => {
   getSummaryMain().then(main => {
+    getSummaryData('gas').then(gas => {
+
     const init_name = Object.keys(data)[0];
     getSummaryComparison(init_name).then(com => {
-      setRight(data, main, com, init_name);
+      setRight(data, gas, main, com, init_name);
       $.get('/assets/map/Netherlands.json', d => {
         map.setMapData(d);
         map.loadData(data);
@@ -100,6 +102,7 @@ getSummaryData('electricity').then(data => {
         canvas.appendChild(map.renderer().domElement);
       })
     })
+  })
   })
 })
 
@@ -111,24 +114,31 @@ function needZoomIn(gemeenten) {
     getDetailData(gemeenten, colorKey).then(color => {
       const init_name = Object.keys(data)[0];
       getProvinceComparison(gemeenten, init_name).then(pop => {
-        $.get('/assets/map/' + gemeenten + '.json', d => {
-          var gmap = new GMap()
-          gmap.setMapData(d);
-          gmap.loadData(data);
-          gmap.loadColorData(color);
-          loadComparison(init_name, pop)
 
-          map.addnewmap(gmap, gemeenten)
-          gmap.on('mouseover', (e, g) => {
-            const name = g.data.properties.Gemeentena;
-            rightHoverOn(name);
-            getProvinceComparison(gemeenten, name).then(pop => {
-              loadComparison(name, pop)
+        getDetailData(gemeenten, 'electricity').then(electricity => {
+          getDetailData(gemeenten, 'gas').then(gas => {
+            $.get('/assets/map/' + gemeenten + '.json', d => {
+              updateRight(electricity);
+              updateRightColor(gas);
+              var gmap = new GMap()
+              gmap.setMapData(d);
+              gmap.loadData(data);
+              gmap.loadColorData(color);
+              loadComparison(init_name, pop)
+    
+              map.addnewmap(gmap, gemeenten)
+              gmap.on('mouseover', (e, g) => {
+                const name = g.data.properties.Gemeentena;
+                rightHoverOn(name);
+                getProvinceComparison(gemeenten, name).then(pop => {
+                  loadComparison(name, pop)
+                })
+              });
+              gmap.hoverEnd(() => {
+                rightHoverEnd()
+              });
             })
-          });
-          gmap.hoverEnd(() => {
-            rightHoverEnd()
-          });
+          })
         })
       })        
     })
@@ -146,20 +156,18 @@ $('input').on('ifChecked', function (event) {
     getSummaryData(event.target.id)
     .then(data => {
       map.loadData(data);
-      updateRight(data);
     })
   }else if (event.target.name == 'iCheckColor') {
     getSummaryData(event.target.id)
     .then(data => {
       map.loadColorData(data);
-      updateRightColor(data);
     })
   }
 });
 
 /// right section
-function setRight(data, main, com, name) {
-  initChart(data, main, com, name);
+function setRight(electricity, gas, main, com, name) {
+  initChart(electricity, gas, main, com, name);
 }
 
 
