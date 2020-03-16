@@ -229,7 +229,52 @@ export function initChart(data, main, com, name) {
             {
                 type : 'category',
                 axisTick : {show: false},
-                data : ['Population','Gas','Electricity','Hoursing Price','Transportation']
+                data : ['Gas','Electricity','Population','Hoursing Price','Transportation']
+            }
+        ],
+        series : [
+            {
+                name:'min',
+                type:'bar',
+                stack: '总量',
+                label: {
+                      show: true,
+                      position: 'insideRight'
+                },
+                data:[1703778, 5615641.12,1553846.1, 350000, 350297]
+            },
+            {
+                name: 'avg',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                      show: true,
+                      position: 'insideRight'
+                },
+                data: [1803778, 1803778, 1803778, 1803778, 1803778]
+            },
+    
+            {
+                name: 'max',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                      show: true,
+                      position: 'insideRight'
+                },
+                data: [1803778, 1803778, 1803778, 1803778, 1803778]
+            },
+                {
+                name:'Province',
+                type:'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        formatter: function(params){return -params.value}
+                    }
+                },
+                data:[-498130, -178731.16,-517703.35, -230000, -125035]
             }
         ]
     };
@@ -263,6 +308,11 @@ export function initChart(data, main, com, name) {
         name: 'Houring Price',
         index: 3,
         text: 'Houring Price (Euro)'
+    },
+    {
+        name: 'Transportation',
+        index: 4,
+        text: 'Transportation'
     },
     ];
 
