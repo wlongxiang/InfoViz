@@ -8,6 +8,7 @@ var mapdata = null;
 var mapkeys = null;
 var highlightid = null;
 var bar = null;
+var n_main = null;
 
 var pieLeftChart = echarts.init(document.getElementById("pie_left_container"));
 var pieRightChart = echarts.init(document.getElementById("pie_right_container"));
@@ -15,7 +16,7 @@ var pieRightChart = echarts.init(document.getElementById("pie_right_container"))
 var popChart = echarts.init(document.getElementById("pop_container"));
 var scatterChart = echarts.init(document.getElementById("sc_container"));
 
-export function initChart(data, main) {
+export function initChart(data, main, com, name) {
     var option = {
         title: {
             text: 'Gas Comparision',
@@ -230,65 +231,18 @@ export function initChart(data, main) {
                 axisTick : {show: false},
                 data : ['Population','Gas','Electricity','Hoursing Price','Transportation']
             }
-        ],
-        series : [
-            {
-                name:'min',
-                type:'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data:[1703778, 5615641.12,1553846.1, 350000, 350297]
-            },
-            {
-                name: 'avg',
-                type: 'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
-            },
-    
-            {
-                name: 'max',
-                type: 'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778, 1803778, 1803778]
-            },
-                {
-                name:'Province',
-                type:'bar',
-                stack: '总量',
-                label: {
-                    normal: {
-                        show: true,
-                        formatter: function(params){return -params.value}
-                    }
-                },
-                data:[-498130, -178731.16,-517703.35, -230000, -125035]
-            }
         ]
     };
 
     popChart.resize();
     if (option && typeof option === "object") {
         popChart.setOption(option, true);
+        console.log(com)
+        loadComparison(name, com);
     }
 
-    var main_data = Object.keys(main).map(function (key) {
-        return main[key];
-    });
-
-    console.log(main_data)
-
+    var main_data = convertMainData(main)
+    n_main = main_data;
 
     var schema = [{
         name: 'Gas',
@@ -494,6 +448,13 @@ function convertPieData(data) {
     return res
 }
 
+function convertMainData(main) {
+    var main_data = Object.keys(main).map(function (key) {
+        return main[key];
+    });
+    return main_data;
+}
+
 export function rightHoverOn(obj) {
     pieLeftChart.dispatchAction({
         type: 'highlight',
@@ -516,6 +477,17 @@ export function rightHoverEnd(obj) {
     })
 }
 
+export function updateMain(data) {
+    var main_data = convertMainData(data)
+    console.log(data)
+
+    scatterChart.setOption({
+        series: [{
+            data: main_data
+        }]
+    });
+}
+
 export function updateRight(data) {
     pieLeftChart.setOption({
         series: [{
@@ -532,8 +504,7 @@ export function updateRightColor(data) {
     });
 }
 
-export function loadComparison(data) {
-    console.log(data)
+export function loadComparison(name, data) {
     var pop = [
         {
             name:'min',
@@ -580,6 +551,10 @@ export function loadComparison(data) {
         }
     ]
     popChart.setOption({
+        title: {
+            text: name + ' VS Rest Of Netherlands',
+            left: "center"
+        },
         series: pop
     });
 }

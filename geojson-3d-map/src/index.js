@@ -3,7 +3,7 @@ import './index.less';
 import ThreeMap from './ThreeMap.js';
 import { GMap } from './ThreeMap.js';
 
-import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, updateRightColor }from './RightChart.js'
+import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, updateRightColor, updateMain }from './RightChart.js'
 // import { CineonToneMapping } from './assets/plugin/threejs/three';
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
@@ -17,14 +17,20 @@ var right = document.getElementById("right");
 
 // create map
 const map = new ThreeMap();
+
 map.on('click', (e, g) => {
-  needZoomIn(g.data.properties.locname);
+  const name = g.data.properties.locname;
+  needZoomIn(name);
+  console.log(name)
+  getProvinceMain(name).then(main => {
+    updateMain(main);
+  })
 });
 map.on('mouseover', (e, g) => {
   const name = g.data.properties.locname;
     rightHoverOn(name);
     getSummaryComparison(name).then(pop => {
-      loadComparison(pop)
+      loadComparison(name, pop)
     })
 });
 map.hoverEnd(() => {
@@ -56,6 +62,14 @@ const getSummaryMain = () => {
   })
 }
 
+const getProvinceMain = (province) => {
+  return new Promise(function (resolve, reject) {
+    $.get('/infoviz/province_main/' + province, pro => {
+      resolve(pro);
+    })
+  })
+}
+
 const getSummaryComparison = (province) => {
   return new Promise(function (resolve, reject) {
     $.get('/infoviz/summary_pop/' + province , pro => {
@@ -66,17 +80,18 @@ const getSummaryComparison = (province) => {
 
 getSummaryData('electricity').then(data => {
   getSummaryMain().then(main => {
-    setRight(data, main);
-    $.get('/assets/map/Netherlands.json', d => {
-      map.setMapData(d);
-      map.loadData(data);
-      map.loadColorData(data);
-      canvas.appendChild(map.renderer().domElement);
+    const init_name = Object.keys(data)[0];
+    getSummaryComparison(init_name).then(com => {
+      setRight(data, main, com, init_name);
+      $.get('/assets/map/Netherlands.json', d => {
+        map.setMapData(d);
+        map.loadData(data);
+        map.loadColorData(data);
+        canvas.appendChild(map.renderer().domElement);
+      })
     })
   })
 })
-
-
 
 function needZoomIn(gemeenten) {
   var key = $(".radio_data:checked").attr('id')
@@ -126,8 +141,9 @@ $('input').on('ifChecked', function (event) {
 });
 
 /// right section
-function setRight(data, main) {
-  initChart(data, main);
+function setRight(data, main, com, name) {
+  console.log('this' + name)
+  initChart(data, main, com, name);
 }
 
 

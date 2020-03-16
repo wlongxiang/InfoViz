@@ -19,6 +19,8 @@ urlpatterns = [
 
     path('summary_main/<str:rtype>', views.summary_main),
 
+    path('province_main/<str:province>', views.province_main),
+
     path('summary_pop/<str:province>', views.summary_pop)
 
 ]

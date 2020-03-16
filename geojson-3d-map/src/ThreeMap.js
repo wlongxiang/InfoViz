@@ -180,12 +180,16 @@ export default class ThreeMap {
     if (!this.isHide) {
       // 计算物体和射线的焦点
       const intersects = this.raycaster.intersectObjects(this.meshes);
+
       if (intersects.length > 0) {
-        if (this.skip) {
-          this.skip = false;
-        } else {
+
+        // if (this.skip) {
+
+        //   this.skip = false;
+        // } else {
+
           this.clickFunction(event, intersects[0].object.parent);
-        }
+        // }
       }
     }
   }
@@ -397,7 +401,6 @@ export default class ThreeMap {
   }
 
   loadColorData(data) {
-    this.colorData = data
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
@@ -691,70 +694,34 @@ export class GMap {
 
   loadData(data) {
     const values = Object.keys(data).map(function (key) {
-      const value = data[key];
-      if (typeof (value) == 'string') {
-        return value.replace(',', '') - 0;
-      } else {
-        return 20;
-      }
+      return data[key];
     });
     const k = 1 / (Math.max(...values) - Math.min(...values))
     const min_value = Math.min(...values)
     this.meshes.forEach(mesh => {
-      const name = mesh.name;
-      const value = data[name];
-      var res = 20;
-      if (typeof (value) == 'string') {
-        res = k * (value.replace(',', '') - min_value) + 0.5;
-      }
-      mesh.scale.z = res;
+      const name = mesh.name
+      const value = k * (data[name] - min_value) + 0.5
+      mesh.scale.z = value;
     })
     this.lineMeshs.forEach(line => {
-      const name = line.name;
-      const value = data[name];
-      var res = 20;
-      if (typeof (value) == 'string') {
-        res = k * (value.replace(',', '') - min_value) + 0.5;
-      }
-      line.position.z = res;
+      const name = line.name
+      const value = k * (data[name] - min_value) + 0.5
+      line.position.z = value;
     })
-
-    
   }
 
   loadColorData(data) {
-    this.colorData = data
     const values = Object.keys(data).map(function (key) {
-      const value = data[key];
-      if (typeof (value) == 'string') {
-        return value.replace(',', '') - 0;
-      } else {
-        return 20;
-      }
+      return data[key];
     });
     const k = 1 / (Math.max(...values) - Math.min(...values))
     const min_value = Math.min(...values)
     this.meshes.forEach(mesh => {
-      const name = mesh.name;
-      const value = data[name];
-      var res = 20;
-      if (typeof (value) == 'string') {
-        res = k * (value.replace(',', '') - min_value) + 0.5;
-      }
-      const lutColor = lut.getColor(res);
+      const name = mesh.name
+      const value = k * (data[name] - min_value) + 0.5
+      const lutColor = lut.getColor(value);
       mesh.material.color.set(lutColor);
     })
-
-    // const k = 1 / (Math.max(...values) - Math.min(...values))
-    // const min_value = Math.min(...values)
-    // this.meshes.forEach(mesh => {
-    //   const name = mesh.name
-    //   const value = k * (data[name] - min_value) + 0.5
-    //   const lutColor = lut.getColor(value);
-    //   console.log(value);
-
-    //   mesh.material.color.set(lutColor);
-    // })
   }
 
 
