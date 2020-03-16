@@ -228,7 +228,7 @@ export function initChart(data, main) {
             {
                 type : 'category',
                 axisTick : {show: false},
-                data : ['Polulation','Gas','Electricity','Hoursing Price','Transportation']
+                data : ['Population','Gas','Electricity','Hoursing Price','Transportation']
             }
         ],
         series : [
