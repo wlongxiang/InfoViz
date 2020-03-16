@@ -9,6 +9,8 @@ var mapkeys = null;
 var highlightid = null;
 var bar = null;
 var n_main = null;
+var n_com = null;
+var n_name = null;
 
 var pieLeftChart = echarts.init(document.getElementById("pie_left_container"));
 var pieRightChart = echarts.init(document.getElementById("pie_right_container"));
@@ -229,52 +231,7 @@ export function initChart(data, main, com, name) {
             {
                 type : 'category',
                 axisTick : {show: false},
-                data : ['Gas','Electricity','Population','Hoursing Price','Transportation']
-            }
-        ],
-        series : [
-            {
-                name:'min',
-                type:'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data:[1703778, 5615641.12,1553846.1, 350000, 350297]
-            },
-            {
-                name: 'avg',
-                type: 'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778]
-            },
-    
-            {
-                name: 'max',
-                type: 'bar',
-                stack: '总量',
-                label: {
-                      show: true,
-                      position: 'insideRight'
-                },
-                data: [1803778, 1803778, 1803778, 1803778, 1803778]
-            },
-                {
-                name:'Province',
-                type:'bar',
-                stack: '总量',
-                label: {
-                    normal: {
-                        show: true,
-                        formatter: function(params){return -params.value}
-                    }
-                },
-                data:[-498130, -178731.16,-517703.35, -230000, -125035]
+                data : ['Transportation','Hoursing Price','Population','Electricity','Gas']
             }
         ]
     };
@@ -282,7 +239,8 @@ export function initChart(data, main, com, name) {
     popChart.resize();
     if (option && typeof option === "object") {
         popChart.setOption(option, true);
-        console.log(com)
+        n_name = name;
+        n_com = com;
         loadComparison(name, com);
     }
 
@@ -607,4 +565,9 @@ export function loadComparison(name, data) {
         },
         series: pop
     });
+}
+
+export function back() {
+    updateMain(n_main);
+    loadComparison(n_name, n_com);
 }

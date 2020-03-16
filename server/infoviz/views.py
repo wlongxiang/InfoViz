@@ -35,10 +35,20 @@ def summary_pop(request, province):
     p_data = Summary.objects.filter(province=province)
     other = Summary.objects.filter(~Q(province=province))
     df = pd.DataFrame(list(other.values()))[['gas', 'electricity', 'totaalmannenenvrouwen', 'housing_price', 'transport']]
-    resp = {'province' : [-getattr(q, 'gas'), -getattr(q, 'electricity'), -getattr(q, 'totaalmannenenvrouwen'), -getattr(q, 'housing_price'),  -getattr(q, 'transport')] for q in p_data}
-    resp['mean'] = list(df.mean()[['gas', 'electricity', 'totaalmannenenvrouwen', 'housing_price', 'transport']])
-    resp['min'] = list(df.min()[['gas', 'electricity', 'totaalmannenenvrouwen', 'housing_price', 'transport']])
-    resp['max'] = list(df.max()[['gas', 'electricity', 'totaalmannenenvrouwen', 'housing_price', 'transport']])
+    resp = {'province' : [-getattr(q, 'transport'), -getattr(q, 'housing_price'), -getattr(q, 'totaalmannenenvrouwen'), -getattr(q, 'electricity'), -getattr(q, 'gas')] for q in p_data}
+    resp['mean'] = list(df.mean()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['min'] = list(df.min()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['max'] = list(df.max()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    return HttpResponse(json.dumps(resp), content_type="application/json")
+
+def province_pop(request, province, gemeenten):
+    p_data = Gemeente.objects.filter(province=province).filter(gemeentenaam=gemeenten)
+    other = Gemeente.objects.filter(province=province).filter(~Q(gemeentenaam=gemeenten))
+    df = pd.DataFrame(list(other.values()))[['gas', 'electricity', 'totaalmannenenvrouwen', 'housing_price', 'transport']]
+    resp = {'province' : [-getattr(q, 'transport'), -getattr(q, 'housing_price'), -getattr(q, 'totaalmannenenvrouwen'), -getattr(q, 'electricity'), -getattr(q, 'gas')] for q in p_data}
+    resp['mean'] = list(df.mean()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['min'] = list(df.min()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['max'] = list(df.max()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 

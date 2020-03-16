@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('province_main/<str:province>', views.province_main),
 
-    path('summary_pop/<str:province>', views.summary_pop)
+    path('summary_pop/<str:province>', views.summary_pop),
+
+    path('province_pop/<str:province>/<str:gemeenten>', views.province_pop)
 
 ]

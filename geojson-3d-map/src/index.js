@@ -3,7 +3,7 @@ import './index.less';
 import ThreeMap from './ThreeMap.js';
 import { GMap } from './ThreeMap.js';
 
-import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, updateRightColor, updateMain }from './RightChart.js'
+import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, updateRightColor, updateMain, back }from './RightChart.js'
 // import { CineonToneMapping } from './assets/plugin/threejs/three';
 // 打包的时候，此代码不载入
 if (process.env.NODE_ENV === 'development') {
@@ -21,7 +21,6 @@ const map = new ThreeMap();
 map.on('click', (e, g) => {
   const name = g.data.properties.locname;
   needZoomIn(name);
-  console.log(name)
   getProvinceMain(name).then(main => {
     updateMain(main);
   })
@@ -36,6 +35,9 @@ map.on('mouseover', (e, g) => {
 map.hoverEnd(() => {
    rightHoverEnd()
 });
+map.onBtnClick(() => {
+  back();
+})
 
 // network
 const getSummaryData = type => {
@@ -78,6 +80,14 @@ const getSummaryComparison = (province) => {
   })
 }
 
+const getProvinceComparison = (province, gemeenten) => {
+  return new Promise(function (resolve, reject) {
+    $.get('/infoviz/province_pop/' + province + '/' + gemeenten , pro => {
+      resolve(pro);
+    })
+  })
+}
+
 getSummaryData('electricity').then(data => {
   getSummaryMain().then(main => {
     const init_name = Object.keys(data)[0];
@@ -99,21 +109,28 @@ function needZoomIn(gemeenten) {
 
   getDetailData(gemeenten, key).then(data => {
     getDetailData(gemeenten, colorKey).then(color => {
-
-        // setRight(data)
+      const init_name = Object.keys(data)[0];
+      getProvinceComparison(gemeenten, init_name).then(pop => {
         $.get('/assets/map/' + gemeenten + '.json', d => {
           var gmap = new GMap()
           gmap.setMapData(d);
           gmap.loadData(data);
           gmap.loadColorData(color);
+          loadComparison(init_name, pop)
+
           map.addnewmap(gmap, gemeenten)
           gmap.on('mouseover', (e, g) => {
-            rightHoverOn(g.data.properties.locname);
+            const name = g.data.properties.Gemeentena;
+            rightHoverOn(name);
+            getProvinceComparison(gemeenten, name).then(pop => {
+              loadComparison(name, pop)
+            })
           });
           gmap.hoverEnd(() => {
             rightHoverEnd()
           });
         })
+      })        
     })
   })
 }
@@ -142,7 +159,6 @@ $('input').on('ifChecked', function (event) {
 
 /// right section
 function setRight(data, main, com, name) {
-  console.log('this' + name)
   initChart(data, main, com, name);
 }
 

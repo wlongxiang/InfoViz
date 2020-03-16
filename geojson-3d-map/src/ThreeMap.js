@@ -142,6 +142,11 @@ export default class ThreeMap {
     this.gmap.remove();
     this.gmap = null;
     this.skip = true;
+    this.btnClickFunction();
+  }
+
+  onBtnClick(func) {
+    this.btnClickFunction = func;
   }
 
   mouseoverEvent(event) {
