@@ -192,7 +192,6 @@ function setRight(electricity, gas, main, com, name) {
 const format_dict = {'electricity':'KWh', 'gas':'M3', 'housing_price':'Euro' , 'totaalmannenenvrouwen':'', 'transport':''}
 
 function loadColorBar(data, format) {
-  console.log(data);
   const values = Object.keys(data).map(function (key) {
     return data[key];
   });
@@ -207,7 +206,7 @@ function loadColorBar(data, format) {
   colorbar_format.innerHTML = format_dict[format]
 }
 
-function nFormatter(num, digits) {
+function nFormatter(num) {
   const si = [
       { value: 1, symbol: "" },
       { value: 1E3, symbol: "K" },
@@ -224,5 +223,5 @@ function nFormatter(num, digits) {
           break;
       }
   }
-  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+  return (num / si[i].value).toFixed(0).replace(rx, "$1") + si[i].symbol;
 }

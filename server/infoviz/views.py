@@ -7,6 +7,7 @@ from .models import Gemeente
 import json
 import pandas as pd
 from django.db.models import Q
+import numpy as np
 
 def index(request):
     return HttpResponse("Hello, world. Index Page.")
@@ -39,6 +40,10 @@ def summary_pop(request, province):
     resp['mean'] = list(df.mean()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
     resp['min'] = list(df.min()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
     resp['max'] = list(df.max()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['province_r'] = list(np.divide(resp['province'], resp['max']))
+    resp['mean_r'] = list(np.divide(resp['mean'], resp['max']))
+    resp['min_r'] = list(np.divide(resp['min'], resp['max']))
+    resp['max_r'] = [1] * len(resp['min_r'])
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 def province_pop(request, province, gemeenten):
@@ -49,6 +54,10 @@ def province_pop(request, province, gemeenten):
     resp['mean'] = list(df.mean()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
     resp['min'] = list(df.min()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
     resp['max'] = list(df.max()[['transport','housing_price','totaalmannenenvrouwen', 'electricity','gas']])
+    resp['province_r'] = list(np.divide(resp['province'], resp['max']))
+    resp['mean_r'] = list(np.divide(resp['mean'], resp['max']))
+    resp['min_r'] = list(np.divide(resp['min'], resp['max']))
+    resp['max_r'] = [1] * len(resp['min_r'])
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
