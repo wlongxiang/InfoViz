@@ -9,12 +9,16 @@ import { initChart, rightHoverOn, updateRight, rightHoverEnd, loadComparison, up
 if (process.env.NODE_ENV === 'development') {
   import('./index.html');
 }
-var left = document.getElementById("left");
-setLeft();
-var canvas = document.getElementById("center");
-var datalist = document.getElementById('list_color');
-var right = document.getElementById("right");
 
+var canvas = document.getElementById("center");
+var colorbar_1 = document.getElementById("colorbar_1");
+var colorbar_2 = document.getElementById("colorbar_2");
+var colorbar_3 = document.getElementById("colorbar_3");
+var colorbar_4 = document.getElementById("colorbar_4");
+var colorbar_format = document.getElementById("colorbar_format");
+var showgmap;
+var showg = false;
+var showgemeenten = '';
 // create map
 const map = new ThreeMap();
 
@@ -36,6 +40,7 @@ map.hoverEnd(() => {
    rightHoverEnd()
 });
 map.onBtnClick(() => {
+  showg = false;
   back();
 })
 
@@ -99,6 +104,7 @@ getSummaryData('electricity').then(data => {
         map.setMapData(d);
         map.loadData(data);
         map.loadColorData(data);
+        loadColorBar(data, 'electricity');
         canvas.appendChild(map.renderer().domElement);
       })
     })
@@ -120,10 +126,14 @@ function needZoomIn(gemeenten) {
             $.get('/assets/map/' + gemeenten + '.json', d => {
               updateRight(electricity);
               updateRightColor(gas);
+              showg = true;
+              showgemeenten = gemeenten;
               var gmap = new GMap()
               gmap.setMapData(d);
               gmap.loadData(data);
               gmap.loadColorData(color);
+              showgmap = gmap;
+              loadColorBar(data, colorKey);
               loadComparison(init_name, pop)
     
               map.addnewmap(gmap, gemeenten)
@@ -145,23 +155,32 @@ function needZoomIn(gemeenten) {
   })
 }
 
-/// left section
-function setLeft() {
-  // var slider = createD3RangeSlider(0, 100, "#slider-container");
-}
-
 // action
 $('input').on('ifChecked', function (event) {
   if (event.target.name == 'iCheck') {
-    getSummaryData(event.target.id)
-    .then(data => {
-      map.loadData(data);
-    })
+    if (showg) {
+      getDetailData(showgemeenten, event.target.id).then(data => {
+        showgmap.loadData(data);
+      })
+    }else {
+      getSummaryData(event.target.id)
+      .then(data => {
+        map.loadData(data);
+      })
+    }
   }else if (event.target.name == 'iCheckColor') {
-    getSummaryData(event.target.id)
-    .then(data => {
-      map.loadColorData(data);
-    })
+    if (showg) {
+      getDetailData(showgemeenten, event.target.id).then(data => {
+        showgmap.loadColorData(data);
+        loadColorBar(data, event.target.id);
+      })
+    }else {
+      getSummaryData(event.target.id)
+      .then(data => {
+        map.loadColorData(data);
+        loadColorBar(data, event.target.id);
+      })
+    }
   }
 });
 
@@ -170,4 +189,40 @@ function setRight(electricity, gas, main, com, name) {
   initChart(electricity, gas, main, com, name);
 }
 
+const format_dict = {'electricity':'KWh', 'gas':'M3', 'housing_price':'Euro' , 'totaalmannenenvrouwen':'', 'transport':''}
 
+function loadColorBar(data, format) {
+  console.log(data);
+  const values = Object.keys(data).map(function (key) {
+    return data[key];
+  });
+  const k = 1 / (Math.max(...values) - Math.min(...values) + 0.5 * Math.min(...values))
+  const min_value = 0.5 * Math.min(...values)
+  const max_value = 0.5 * Math.max(...values)
+  const interval = (max_value - min_value) / 3
+  colorbar_1.innerHTML = nFormatter(Math.min(min_value))
+  colorbar_2.innerHTML = nFormatter(Math.min(min_value + interval))
+  colorbar_3.innerHTML = nFormatter(Math.min(min_value + 2 * interval))
+  colorbar_4.innerHTML = nFormatter(Math.min(max_value))
+  colorbar_format.innerHTML = format_dict[format]
+}
+
+function nFormatter(num, digits) {
+  const si = [
+      { value: 1, symbol: "" },
+      { value: 1E3, symbol: "K" },
+      { value: 1E6, symbol: "M" },
+      { value: 1E9, symbol: "G" },
+      { value: 1E12, symbol: "T" },
+      { value: 1E15, symbol: "P" },
+      { value: 1E18, symbol: "E" }
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  let i;
+  for (i = si.length - 1; i > 0; i--) {
+      if (num >= si[i].value) {
+          break;
+      }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+}

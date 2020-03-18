@@ -4,10 +4,6 @@ const height = 300;
 var svg = d3.select("#right")
     .append("svg").attr("width", width).attr("height", height);
 
-var mapdata = null;
-var mapkeys = null;
-var highlightid = null;
-var bar = null;
 var n_main = null;
 var n_com = null;
 var n_name = null;
@@ -491,8 +487,6 @@ export function rightHoverEnd(obj) {
 
 export function updateMain(data) {
     var main_data = convertMainData(data)
-    console.log(data)
-
     scatterChart.setOption({
         series: [{
             data: main_data
@@ -564,7 +558,7 @@ export function loadComparison(name, data) {
     ]
     popChart.setOption({
         title: {
-            text: name + ' VS Rest Of Netherlands',
+            text: name + ' VS Rest',
             left: "center"
         },
         series: pop
@@ -574,7 +568,6 @@ export function loadComparison(name, data) {
 export function back() {
     updateMain(n_main);
     loadComparison(n_name, n_com);
-    console.log(n_elec);
     updateRight(n_elec);
     updateRightColor(n_gas);
 }

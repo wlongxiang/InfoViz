@@ -391,16 +391,16 @@ export default class ThreeMap {
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
-    const k = 1 / (Math.max(...values) - Math.min(...values))
-    const min_value = Math.min(...values)
+    const k = 1 / (Math.max(...values) - Math.min(...values) + 0.5 * Math.min(...values))
+    const min_value = 0.5 * Math.min(...values)
     this.meshes.forEach(mesh => {
       const name = mesh.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       mesh.scale.z = value;
     })
     this.lineMeshs.forEach(line => {
       const name = line.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       line.position.z = value;
     })
   }
@@ -409,11 +409,11 @@ export default class ThreeMap {
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
-    const k = 1 / (Math.max(...values) - Math.min(...values))
-    const min_value = Math.min(...values)
+    const k = 1 / (Math.max(...values) - Math.min(...values) + 0.5 * Math.min(...values))
+    const min_value = 0.5 * Math.min(...values)
     this.meshes.forEach(mesh => {
       const name = mesh.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       const lutColor = lut.getColor(value);
       mesh.material.color.set(lutColor);
     })
@@ -701,16 +701,16 @@ export class GMap {
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
-    const k = 1 / (Math.max(...values) - Math.min(...values))
-    const min_value = Math.min(...values)
+    const k = 1 / (Math.max(...values) - Math.min(...values) + 0.5 * Math.min(...values))
+    const min_value = 0.5 * Math.min(...values)
     this.meshes.forEach(mesh => {
       const name = mesh.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       mesh.scale.z = value;
     })
     this.lineMeshs.forEach(line => {
       const name = line.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       line.position.z = value;
     })
   }
@@ -719,11 +719,11 @@ export class GMap {
     const values = Object.keys(data).map(function (key) {
       return data[key];
     });
-    const k = 1 / (Math.max(...values) - Math.min(...values))
-    const min_value = Math.min(...values)
+    const k = 1 / (Math.max(...values) - Math.min(...values) + 0.5 * Math.min(...values))
+    const min_value = 0.5 * Math.min(...values)
     this.meshes.forEach(mesh => {
       const name = mesh.name
-      const value = k * (data[name] - min_value) + 0.5
+      const value = k * (data[name] - min_value)
       const lutColor = lut.getColor(value);
       mesh.material.color.set(lutColor);
     })
