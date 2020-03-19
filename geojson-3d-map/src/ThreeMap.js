@@ -102,7 +102,7 @@ function init() {
   setLight();
   setRender();
 
-  setHelper();
+  // setHelper();
 
   setControl();
   animate();
