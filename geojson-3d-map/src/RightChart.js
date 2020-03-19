@@ -253,9 +253,9 @@ export function initChart(electricity, gas, main, com, name) {
         text: 'Population Number'
     },
     {
-        name: 'Houring Price',
+        name: 'Housing Price',
         index: 3,
-        text: 'Houring Price (Euro)'
+        text: 'Housing Price (Euro)'
     },
     {
         name: 'Transportation',
