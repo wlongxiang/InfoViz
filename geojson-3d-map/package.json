@@ -61,7 +61,7 @@
     "d3-geo": "^1.11.3",
     "http-proxy-middleware": "^1.0.1",
     "lodash.throttle": "^4.1.1",
-    "three": "^0.114.0",
+    "three": "^0.137.0",
     "tween": "^0.9.0"
   }
 }
