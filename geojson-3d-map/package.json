@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
-    "d3": "^5.15.0",
+    "d3": "^7.6.1",
     "d3-geo": "^1.11.3",
     "http-proxy-middleware": "^1.0.1",
     "lodash.throttle": "^4.1.1",
